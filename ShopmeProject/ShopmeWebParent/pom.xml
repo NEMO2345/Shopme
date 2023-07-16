@@ -35,6 +35,15 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 		<dependency>
+			    <groupId>org.thymeleaf.extras</groupId>
+			    <artifactId>thymeleaf-extras-springsecurity6</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.thymeleaf.extras</groupId>
+		    <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+		    <version>3.0.4.RELEASE</version>
+</dependency>
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
@@ -80,6 +89,14 @@
     <repository>
         <id>speedment-maven-releases</id>
         <url>https://repo.speedment.com/maven</url>
+    </repository>
+     <repository>
+        <id>central</id>
+        <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+    <repository>
+        <id>spring-milestone</id>
+        <url>https://repo.spring.io/milestone</url>
     </repository>
 </repositories>
 

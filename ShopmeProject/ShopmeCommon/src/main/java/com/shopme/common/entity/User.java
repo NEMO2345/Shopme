@@ -5,6 +5,7 @@ import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -39,7 +40,7 @@ public class User {
 
 	private boolean enabled;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 			name ="users_roles",
 			joinColumns = @JoinColumn(name = "role_id")
@@ -118,9 +119,7 @@ public class User {
 		return roles;
 	}
 
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
+	
 	
 	public void addRole(Role role) {
 		this.roles.add(role);
@@ -137,6 +136,11 @@ public class User {
 		if(id == null || photos == null) return "/images/default-user.png";
 		
 		return "/user-photos/"+ this.id +"/" + this.photos;
+	}
+	@Transient
+	public String getFullName() {
+	    String fullname = this.firstName + " " + this.lastName;
+	    return fullname;
 	}
 	
 }

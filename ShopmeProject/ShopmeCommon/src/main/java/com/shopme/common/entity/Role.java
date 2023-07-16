@@ -2,8 +2,6 @@ package com.shopme.common.entity;
 
 import java.util.Objects;
 
-import org.hibernate.boot.model.naming.ImplicitNameSource;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

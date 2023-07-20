@@ -23,7 +23,7 @@ public class WebSecurityConfig {
 	
 	@Bean
 	public UserDetailsService userDetailsService() {
-		return new ShopmeUserDetailService();
+		return new ShopmeUserDetailsService();
 	}
 	
 	@Bean
@@ -47,16 +47,7 @@ public class WebSecurityConfig {
         http
             .authorizeHttpRequests(authorize -> authorize
             	.requestMatchers("/users/**").hasAuthority("Admin")
-            	.requestMatchers("/categories/**").hasAnyAuthority("Admin","Editor")
-            	.requestMatchers("/brands/**").hasAnyAuthority("Admin","Editor")
-            	.requestMatchers("/products/**").hasAnyAuthority("Admin","Salespersion","Editor","Shipper")
-            	.requestMatchers("/customers/**").hasAnyAuthority("Admin","Salespersion")
-            	.requestMatchers("/shipping/**").hasAnyAuthority("Admin","Salespersion")
-            	.requestMatchers("/orders/**").hasAnyAuthority("Admin","Salespersion","Shipper")
-            	.requestMatchers("/reports/**").hasAnyAuthority("Admin","Salespersion")
-            	.requestMatchers("/articles/**").hasAnyAuthority("Admin","Editor")
-            	.requestMatchers("/menus/**").hasAnyAuthority("Admin","Editor")
-            	.requestMatchers("/settings/**").hasAnyAuthority("Admin")
+            	.requestMatchers("/categories/**","/brands/**").hasAnyAuthority("Admin","Editor")
                 .anyRequest().authenticated()
             )
             .formLogin(formLogin -> formLogin

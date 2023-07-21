@@ -78,9 +78,9 @@ public class BrandController {
 }
 	
 	@PostMapping("/brands/save")
-	public String saveBrand(Brand brand,@RequestParam("fileImage") MultipartFile multipartFile,
-			RedirectAttributes ra) throws IOException{
-		if(multipartFile.isEmpty()) {
+	public String saveBrand(Brand brand,RedirectAttributes ra,
+			@RequestParam("fileImage") MultipartFile multipartFile) throws IOException{
+		if(!multipartFile.isEmpty()) {
 			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 			brand.setLogo(fileName);
 			 

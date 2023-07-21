@@ -14,6 +14,7 @@
 	</div>
 	
 	<form th:action="@{/products/save}" method="post" onsubmit="return checkUnique(this)"
+		  enctype="multipart/form-data"
 		  th:object="${product}" >
 		  <input type="hidden" th:field="*{id}"/>
 		<div>
@@ -45,7 +46,9 @@
 						  	<div th:replace="products/product_description :: content"></div>
 						  
 					</div>
-						  <div class="tab-pane" id="images" role="tabpanel">Images</div>
+					<div class="tab-pane" id="images" role="tabpanel">
+							<div th:replace="products/product_images :: content"></div>
+					</div>
 						  <div class="tab-pane" id="details" role="tabpanel">Details</div>
 			   	
 			   		<div class="tab-pane p-3" id="shipping" role="tabpanel">
@@ -67,6 +70,8 @@
 	
 </div>
 <script type="text/javascript">
+	MAX_FILE_SIZE = 502400;
+	
  	moduleURL = "[[@{/products}]]";
  	brandmoduleURL = "[[@{/brands}]]";
 
@@ -87,7 +92,7 @@
  	
  	function getCategories(){
  		brandId = dropdownBrands.val()
- 			url= brandmoduleURL +"/"+brandId+"/categories";
+ 			url= brandmoduleURL + "/" + brandId + "/categories";
  		
  			$.get(url, function(responseJson){
  				$.each(responseJson, function(index,category){

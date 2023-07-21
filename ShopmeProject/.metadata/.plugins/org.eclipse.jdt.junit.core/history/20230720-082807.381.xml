@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="BrandServiceTests" project="ShopmeBackEnd" tests="4" started="4" failures="0" errors="0" ignored="0">
-  <testsuite name="com.shopme.admin.brand.BrandServiceTests" time="0.287" displayname="BrandServiceTests" uniqueid="[engine:junit-jupiter]/[class:com.shopme.admin.brand.BrandServiceTests]">
-    <testcase name="testCheckUniqueInNewModeReturnOK" classname="com.shopme.admin.brand.BrandServiceTests" time="0.248" displayname="testCheckUniqueInNewModeReturnOK()" uniqueid="[engine:junit-jupiter]/[class:com.shopme.admin.brand.BrandServiceTests]/[method:testCheckUniqueInNewModeReturnOK()]"/>
-    <testcase name="testCheckUniqueInEditModeReturnOK" classname="com.shopme.admin.brand.BrandServiceTests" time="0.008" displayname="testCheckUniqueInEditModeReturnOK()" uniqueid="[engine:junit-jupiter]/[class:com.shopme.admin.brand.BrandServiceTests]/[method:testCheckUniqueInEditModeReturnOK()]"/>
-    <testcase name="testCheckUniqueInNewModeReturnDuplicate" classname="com.shopme.admin.brand.BrandServiceTests" time="0.006" displayname="testCheckUniqueInNewModeReturnDuplicate()" uniqueid="[engine:junit-jupiter]/[class:com.shopme.admin.brand.BrandServiceTests]/[method:testCheckUniqueInNewModeReturnDuplicate()]"/>
-    <testcase name="testCheckUniqueInEditModeReturnDuplicate" classname="com.shopme.admin.brand.BrandServiceTests" time="0.008" displayname="testCheckUniqueInEditModeReturnDuplicate()" uniqueid="[engine:junit-jupiter]/[class:com.shopme.admin.brand.BrandServiceTests]/[method:testCheckUniqueInEditModeReturnDuplicate()]"/>
-  </testsuite>
-</testrun>

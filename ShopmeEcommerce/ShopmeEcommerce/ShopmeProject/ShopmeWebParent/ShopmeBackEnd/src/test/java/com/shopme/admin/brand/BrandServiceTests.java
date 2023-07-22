@@ -11,7 +11,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.shopme.common.entity.Brand;
-import com.shopme.common.entity.Category;
 
 @ExtendWith(MockitoExtension.class)
 @ExtendWith(SpringExtension.class)

@@ -131,8 +131,8 @@ public class BrandController {
 	}
 	@GetMapping("/brands/export/csv")
 	public void exportToCSV(HttpServletResponse response) throws IOException {
-		List<Category> listCategories = categoryService.listCategoriesUsedInForm();
+		List<Brand> listBrands = brandService.listAll();
 		BrandCsvExporter exporter = new BrandCsvExporter();
-		exporter.export(listCategories, response);
+		exporter.export(listBrands, response);
 	}
 }

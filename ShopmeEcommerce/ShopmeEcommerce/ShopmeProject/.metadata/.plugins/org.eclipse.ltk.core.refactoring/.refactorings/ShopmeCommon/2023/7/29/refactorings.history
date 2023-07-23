@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Extract constant &apos;_255&apos; from expression &apos;255&apos;&#x0D;&#x0A;- Original project: &apos;ShopmeCommon&apos;&#x0D;&#x0A;- Constant name: &apos;_255&apos;&#x0D;&#x0A;- Constant expression: &apos;255&apos;&#x0D;&#x0A;- Declared visibility: &apos;private&apos;" description="Extract constant &apos;_255&apos;" flags="786432" id="org.eclipse.jdt.ui.extract.constant" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.shopme.common.entity{ProductDetail.java" name="_255" qualify="false" replace="false" selection="427 0" stamp="1690034656233" version="1.0" visibility="2"/>
-</session>

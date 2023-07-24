@@ -35,7 +35,12 @@
 					<td>
 						<img th:src="@{${product.mainImagePath}}" style="width:120px" class="img-fluid"/>
 					</td>
-					<td>[[${product.name}]]</td>
+					<td>
+						<a class="link-detail"
+							 th:href="@{'/products/detail/' + ${product.id}}"
+								title="View detail of this product"
+								>[[${product.name}]]</a>
+					</td>
 					<td>[[${product.brand.name}]]</td>
 					<td>[[${product.category.name}]]</td>
 					
@@ -44,23 +49,29 @@
 					</td>
 					
 					<td>
-						<a class="fas fa-file-alt fa-2x icon-green"
-						th:href="@{'/products/detail/' + ${product.id}}"
-						title="View detail of this product"
-						></a>
+						<a class="fas fa-file-alt fa-2x icon-green link-detail"
+							th:href="@{'/products/detail/' + ${product.id}}"
+							title="View detail of this product"
+							></a>
 						&nbsp;&nbsp;
   						<div th:replace="fragments :: edit('product','/products/edit/' + ${product.id} )"/>
 				
-					&nbsp;&nbsp;
-					<div th:replace="fragments :: delete('product', ${product.id}, '/products/delete/' + ${product.id},true)"/>
- 
-						</td>
+						&nbsp;&nbsp;
+						<div th:replace="fragments :: delete('product', ${product.id}, '/products/delete/' + ${product.id},true)"/>
+	 
+							</td>
 				</tr>
-			</tbody>
 		</table>
 	</div>
 		
 	<div th:replace="modal_fragments :: confirm_modal"/>
+	
+	<div class = "modal fade" id ="detailModal">
+		<div class="modal-dialog modal-xl">
+			<div class = "modal-content">
+			</div>
+		</div>
+	</div>
 	
 	<div th:replace="fragments :: footer"></div>
 	
@@ -74,7 +85,12 @@
 			e.preventDefault();
 			showDeleteConfirModal($(this),'product');
 			
-		})
+		});
+		$(".link-detail").on("click", function(e){
+			e.preventDefault();
+			linkDetailURL = $(this).attr("href");
+			$("#detailModal").modal("show").find(".modal-content").load(linkDetailURL);
+		});
 	});
 	
 

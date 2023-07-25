@@ -284,5 +284,12 @@ public class Product {
 		return false;
 	}
 
+	@Transient
+	public String getShortName() {
+		if(name.length() > 50) {
+			return name.substring(0,50).concat("...");
+		}
+		return name;
+	}
 	
 }

@@ -20,11 +20,16 @@
 		<table class="table table-bordered table-striped table-hover table-responsive-xl">
 			<thead class="thead-dark">
 				<tr>
-					<th>ID</th>
+					<th th:replace="fragments :: column_link('/products', 'id', 'ID', 'none')"/>
+					
 					<th>Main Image</th>
-					<th>Product Name</th>
-					<th>Brand</th>
-					<th>Category</th>
+					
+					<th th:replace="fragments :: column_link('/products', 'name', 'Product Name', 'none')"/>
+		
+					<th th:replace="fragments :: column_link('/products', 'brand', 'Brand', 'none')"/>
+					
+					<th th:replace="fragments :: column_link('/products', 'category', 'Category', 'none')"/>
+					
 					<th>Enabled</th>
 					<th></th>
 				</tr>
@@ -38,8 +43,8 @@
 					<td>
 						<a class="link-detail"
 							 th:href="@{'/products/detail/' + ${product.id}}"
-								title="View detail of this product"
-								>[[${product.name}]]</a>
+								th:title="${product.name}"
+								>[[${product.shortName}]]</a>
 					</td>
 					<td>[[${product.brand.name}]]</td>
 					<td>[[${product.category.name}]]</td>
@@ -72,6 +77,8 @@
 			</div>
 		</div>
 	</div>
+	
+	<div th:replace="fragments :: pagination('/products', 'products')"></div>
 	
 	<div th:replace="fragments :: footer"></div>
 	

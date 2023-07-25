@@ -29,7 +29,7 @@ public class BrandService {
 		 Pageable pageable = PageRequest.of(pageNum - 1, BRAND_PER_PAGE,sort);
 		 
 		 if(keyword != null) {
-			  return repo.fillAll(keyword, pageable);
+			  return repo.findAll(keyword, pageable);
 		 } 
 		
 		 return repo.findAll(pageable);

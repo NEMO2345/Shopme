@@ -25,7 +25,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shopme.admin.FileUploadUtil;
 import com.shopme.admin.brand.BrandService;
+import com.shopme.admin.category.CategoryService;
 import com.shopme.common.entity.Brand;
+import com.shopme.common.entity.Category;
 import com.shopme.common.entity.Product;
 import com.shopme.common.entity.ProductImage;
 
@@ -40,20 +42,28 @@ public class ProductController {
 	@Autowired
 	private BrandService brandService;
 	
-	@GetMapping("/products")
-	public String listFirstPage(Model model) {
-		return listByPage(1,model,"name","asc",null);
-
-	}
+	@Autowired
+	private CategoryService categoryService;
+	
+	
+	 @GetMapping("/products") public String listFirstPage(Model model) { return
+	 listByPage(1,model,"name","asc",null,0);
+	 
+	 }
+	 
+	
 	
 	@GetMapping("/products/page/{pageNum}")
 	public String listByPage(
 			@PathVariable(name = "pageNum") int pageNum, Model model,
 			@Param("sortField") String sortField,@Param("sortDir") String sortDir,
-			@Param("keyword") String keyword) {
-	
-		Page<Product> page = productService.listByPage(pageNum, sortField, sortDir, keyword);
+			@Param("keyword") String keyword,
+			@Param("categoryId") Integer categoryId
+				) {
+		Page<Product> page = productService.listByPage(pageNum, sortField, sortDir, keyword,categoryId);
 		List<Product> listProducts = page.getContent();
+		
+		List<Category> listCategories = categoryService.listCategoriesUsedInForm();
 		
 		long startCount = (pageNum - 1) * ProductService.PRODUCTS_PER_PAGE + 1;
 		long endCount = startCount + ProductService.PRODUCTS_PER_PAGE -1;
@@ -62,6 +72,10 @@ public class ProductController {
 		}
 		
 		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
+		
+		if(categoryId != null ) {
+			model.addAttribute("categoryId", reverseSortDir);
+		}
 		
 		model.addAttribute("currentPage",pageNum);
 		model.addAttribute("totalPages", page.getTotalPages());
@@ -73,6 +87,8 @@ public class ProductController {
 		model.addAttribute("reverseSortDir", reverseSortDir);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("listProducts", listProducts);
+		model.addAttribute("listCategories", listCategories);
+
 
 		return "products/products";
 	}

@@ -30,7 +30,7 @@
 	
 	<a  th:fragment="page_link(moduleURL,pageNum, label)"
 		class="page-link" 
-		th:href="@{${moduleURL} + '/page/' + ${pageNum}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${label}]]</a>
+		th:href="@{${moduleURL} + '/page/' + ${pageNum}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''} + ${categoryId != null ? '&categoryId=' + categoryId : ''}}">[[${label}]]</a>
 	
 	<div th:fragment="status(enabled, entityName,entityURL)" th:remove="tag">
 		<a th:if="${enabled == true}" class="fa-solid fa-check-circle fa-2x icon-green" 

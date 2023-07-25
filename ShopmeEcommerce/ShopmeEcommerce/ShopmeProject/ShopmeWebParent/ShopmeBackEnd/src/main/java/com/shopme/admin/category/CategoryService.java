@@ -108,6 +108,13 @@ public class CategoryService {
 	}
 	
 	public Category save(Category category) {
+	Category parent = category.getParent();
+		
+		if(parent != null) {
+			String allParentIdS = parent.getAllParentIDs() == null ? "-" : parent.getAllParentIDs();
+			allParentIdS += String.valueOf(parent.getId()) + "-";
+			category.setAllParentIDs(allParentIdS);
+		}
 		return repo.save(category);
 	}
 	
@@ -185,6 +192,7 @@ public class CategoryService {
 		
 		return "OK";
 	}
+	
 	private SortedSet<Category> sortSubCategories(Set<Category> children){
 		return sortSubCategories(children,"asc");
 	}

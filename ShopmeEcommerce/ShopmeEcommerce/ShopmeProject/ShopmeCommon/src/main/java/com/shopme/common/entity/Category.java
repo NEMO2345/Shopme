@@ -2,7 +2,6 @@ package com.shopme.common.entity;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +29,9 @@ public class Category{
 	private String image;
 	
 	private boolean enabled;
+	
+	@Column(name = "all_parent_ids",length = 256,nullable = true )
+	private String allParentIDs;
 	
 	@ManyToOne
     @JoinColumn(name = "parent_id", unique = false)
@@ -180,6 +182,14 @@ public class Category{
 	@Override
 	public String toString() {
 		return this.name;
+	}
+
+	public String getAllParentIDs() {
+		return allParentIDs;
+	}
+
+	public void setAllParentIDs(String allParentIDs) {
+		this.allParentIDs = allParentIDs;
 	}
 	
 	

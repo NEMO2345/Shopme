@@ -21,7 +21,7 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class ProductService {
 
-	public static final int PRODUCTS_PER_PAGE = 2;
+	public static final int PRODUCTS_PER_PAGE = 10;
 	@Autowired
 	private ProductRepository repo;
 	
@@ -68,6 +68,15 @@ public class ProductService {
 		return repo.save(product);
 	}
 
+	public void saveProductPrice(Product productInForm) {
+	  Product productInDB =	repo.findById(productInForm.getId()).get();
+	  productInDB.setCost(productInForm.getCost());
+	  productInDB.setPrice(productInForm.getPrice());
+	  productInDB.setDiscountPercent(productInForm.getDiscountPercent());;
+	  
+	  repo.save(productInDB);
+	}
+	
 	public String checkUnique(Integer id, String name) {
 		// TODO Auto-generated method stub
 				boolean isGreatingNew = (id == null || id ==0);

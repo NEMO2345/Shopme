@@ -146,6 +146,8 @@ public class ProductController {
 		return "redirect:/products";
  
 	}
+	
+	
 	@GetMapping("/products/delete/{id}")
 	public String deleteProduct(@PathVariable(name="id") Integer id,Model model,
 			RedirectAttributes ra){

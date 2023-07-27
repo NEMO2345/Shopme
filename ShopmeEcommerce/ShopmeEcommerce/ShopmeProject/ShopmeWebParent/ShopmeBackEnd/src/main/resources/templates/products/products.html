@@ -101,11 +101,11 @@
 							></a>
 						<th:block sec:authorize="hasAnyAuthority('Admin','Editor','Salesperson')">
 							&nbsp;&nbsp;
-	  						<div th:replace="fragments :: edit('product','/products/edit/' + ${product.id} )"/>
+	  						<div th:replace="fragments :: edit('product','/products/edit/' + ${product.id} )"></div>
 						</th:block>
 						&nbsp;&nbsp;
 						<th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
-							<div th:replace="fragments :: delete('product', ${product.id}, '/products/delete/' + ${product.id},true)"/>
+							<div th:replace="fragments :: delete('product', ${product.id}, '/products/delete/' + ${product.id},true)"></div>
 	 					</th:block>
 					</td>
 				</tr>

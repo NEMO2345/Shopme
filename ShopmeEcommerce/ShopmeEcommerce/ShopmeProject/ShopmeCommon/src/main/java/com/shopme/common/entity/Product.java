@@ -250,14 +250,37 @@ public class Product {
 	public void addExtraImage(String imageName) {
 		this.images.add(new ProductImage(imageName, this));
 	}
+	/*
+	 * @Transient public String getMainImagePath() { if(id == null || mainImage ==
+	 * null) return "/images/image-thumbnail.png";
+	 * 
+	 * return "/product-images/" + this.id + "/" + this.mainImage; }
+	 */
 	
-	@Transient
-	public String getMainImagePath() {
-		if(id == null || mainImage == null) return "/images/image-thumbnail.png";
-		
-		return "/product-images/" + this.id + "/" + this.mainImage;
-	}
+	  @Transient 
+	  public String getMainImagePath() {
 
+		  if(id == null || mainImage == null ) {
+			  return  "/images/image-thumbnail.png";
+		  }
+	  return "/product-images/" + this.id + "/" + this.mainImage;
+	  }
+	 
+	/*
+	 * @Transient public String getMainImagePath() { if(id == null || mainImage ==
+	 * null) return "/images/image-thumbnail.png";
+	 * 
+	 * String myappHome = System.getenv("ShopmeWebParent"); String imagePath =
+	 * myappHome + "/product-images/" + this.id + "/" + this.mainImage;
+	 * 
+	 * File imageFile = new File(imagePath); if(!imageFile.exists()) { return
+	 * "/images/image-thumbnail.png"; }
+	 * 
+	 * 
+	 * if(!imageFile.canRead()) { return "/images/image-thumbnail.png"; }
+	 * 
+	 * return imagePath; }
+	 */
 	
 	public void setDetails(Set<ProductDetail> details) {
 		this.details = details;
@@ -292,4 +315,11 @@ public class Product {
 		return name;
 	}
 	
+	@Transient
+	public float getDiscountPrice() {
+		if(discountPercent > 0) {
+			return price * ((100-discountPercent)/100);
+		}
+		return this.price;
+	}
 }

@@ -54,21 +54,17 @@
 		<table class="table table-bordered table-striped table-hover table-responsive-xl">
 			<thead class="thead-dark">
 				<tr>
-					<th class="hideable-column">
-						<th th:replace="fragments :: column_link('/products', 'id', 'ID', 'none')"/>
-					</th>
+				
+					<th class="hideable-column" th:replace="fragments :: column_link('/products', 'id', 'ID', 'none')"/>
+					
 					<th>Main Image</th>
 					
 					<th th:replace="fragments :: column_link('/products', 'name', 'Product Name', 'none')"/>
 		
-					<th class="hideable-column">
-						<th th:replace="fragments :: column_link('/products', 'brand', 'Brand', 'none')"/>
-					</th>
-					<th class="hideable-column">
-						<th th:replace="fragments :: column_link('/products', 'category', 'Category', 'none')"/>
-					</th>
-					
-					
+					<th class="hideable-column" th:replace="fragments :: column_link('/products', 'brand', 'Brand', 'none')"/>
+				
+					<th class="hideable-column" th:replace="fragments :: column_link('/products', 'category', 'Category', 'none')"/>
+
 					<th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
 						<th>Enabled</th>
 					</th:block>

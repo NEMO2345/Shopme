@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
+import org.hibernate.internal.build.AllowSysOut;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -46,5 +47,12 @@ public class SettingRepositoryTests {
 		Setting thousandsPointType = new Setting("THOUSANDS_POINT_TYPE", "COMMA", SettingCategory.CURRENCY);
 
 		repo.saveAll(List.of(currentcyId,symbol,symbolPosition,decimaPointType,decimalGigits,thousandsPointType));
+	}
+	
+	@Test
+	public void testListSettingsByCategory() {
+		List<Setting> settings = repo.findByCategory(SettingCategory.GENERAL);
+	
+		settings.forEach(System.out::println);
 	}
 }

@@ -99,9 +99,7 @@
 	
 	<div th:fragment="search_form_and_message(moduleURL)">
 		
-		<div th:if="${message != null}" class="alert alert-success text-center">
-		[[${message}]]
-		</div>
+		
 	
 		<form th:action="@{${moduleURL}}" class="form-inline m-3">
 			<input type="hidden" name="sortField" th:value="${sortField}"/>
@@ -119,6 +117,9 @@
 			</button>
 			
 		</form>
+		<div th:if="${message != null}" class="alert alert-success text-center">
+		[[${message}]]
+		</div>
 	</div>
 	
 </body>

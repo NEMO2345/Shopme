@@ -94,6 +94,10 @@
 				<label class="col-sm-4 col-form-label">Decimal Digists:</label>
 				<div class="col-sm-8">
 					<select name="DECIMAL_DIGITS" class="form-control">
+						<option value="0"
+							 th:selected ="(${DECIMAL_DIGITS} == 0)">
+								0
+							</option>
 							<option value="1"
 							 th:selected ="(${DECIMAL_DIGITS} == 1)">
 								1

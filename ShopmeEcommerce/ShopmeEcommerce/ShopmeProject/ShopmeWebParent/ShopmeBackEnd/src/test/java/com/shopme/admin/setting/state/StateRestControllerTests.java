@@ -16,7 +16,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shopme.admin.setting.country.CountryRepository;
 import com.shopme.common.entity.Country;
@@ -72,7 +71,7 @@ public class StateRestControllerTests {
 		
 		String response = result.getResponse().getContentAsString();
 		Integer stateId = Integer.parseInt(response);
-		Optional<State> findById = stateRepo.findById(countryId);
+		Optional<State> findById = stateRepo.findById(stateId);
 		
 		assertThat(findById.isPresent());
 	}

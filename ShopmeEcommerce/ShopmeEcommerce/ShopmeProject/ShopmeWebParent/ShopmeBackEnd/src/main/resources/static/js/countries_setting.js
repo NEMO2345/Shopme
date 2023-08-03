@@ -31,7 +31,7 @@ $(document).ready(function(){
 		if(buttonAddCountry.val() == "Add"){
 			addCountry();
 		}else{
-			changeFormStateToNew();
+			changeFormStateToNewCountry();
 		}
 	});
 	
@@ -49,14 +49,16 @@ function deletedCountry(){
 	countryId = optionValue.split("-")[0];
 	
 	url = contextPath + "countries/delete/" + countryId;
-	
-	$.get(url, function(){
-		$("#dropDownCountries option[value= '" + optionValue + "']").remove();
-		changeFormStateToNew();
-		
+	$.ajax({
+		type:'DELETE',
+		url: url,
+		beforeSend: function(xhr){
+			xhr.setRequestHeader(csrfHeaderName, csrfValue);
+		}
 	}).done(function(){
-		buttonLoad.val("Refesh Country List");
-		showToastMessage("All countries have been deleted");
+		$("#dropDownCountries option[value= '" + optionValue + "']").remove();
+		changeFormStateToNewCountry();
+		showToastMessage("The country has been deleted");
 	}).fail(function(){
 		showToastMessage("ERROR: Could not connect to server or server encountered an error");
 	});
@@ -84,7 +86,7 @@ function updateCountry(){
 		$("#dropDownCountries option:selected").text(countryName);
 		showToastMessage("The country has been updated");
 		
-		changeFormStateToNew();
+		changeFormStateToNewCountry();
 	}).fail(function(){
 		showToastMessage("ERROR: Could not connect to server or server encountered an error");
 	});
@@ -123,7 +125,7 @@ function selectNewAddedCountry(countryId, countryCode, countryName){
 	fieldCountryName.val("").focus();
 }
 
-function changeFormStateToNew(){
+function changeFormStateToNewCountry(){
 	buttonAddCountry.val("Add");
 	labelCountryName.text("Country Name: ");
 	

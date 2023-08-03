@@ -165,6 +165,7 @@ function loadStates4Country(){
 	});
 }
 
+
 function loadCountries4States(){
 	url = contextPath + "countries/list";
 	$.get(url, function(responseJSON){

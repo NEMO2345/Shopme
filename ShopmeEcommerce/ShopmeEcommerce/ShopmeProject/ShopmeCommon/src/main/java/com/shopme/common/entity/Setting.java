@@ -12,14 +12,14 @@ import jakarta.persistence.Table;
 @Table(name="settings")
 public class Setting {
 	@Id
-	@Column(name = "`key`",nullable = false, length = 128)
+	@Column(name = "`key`",nullable = false, length = 256)
 	private String key;
 	
-	@Column(nullable = false, length = 1024)
+	@Column(nullable = false, length = 2048)
 	private String value;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(length = 45,nullable = false)
+	@Column(length = 100,nullable = false)
 	private SettingCategory category;
 	
 	public Setting() {}

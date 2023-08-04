@@ -61,7 +61,7 @@ public class BrandServiceTests {
 	public void testCheckUniqueInEditModeReturnOK() {
 		Integer id = 1;
 		String name = "Acer";	
-		Brand brand = new Brand(id,name);
+		/* Brand brand = new Brand(id,name); */
 		
 		Mockito.when(repo.findByName(name)).thenReturn(null);
 		

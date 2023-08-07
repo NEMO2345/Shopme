@@ -10,8 +10,12 @@ import org.springframework.stereotype.Service;
 import com.shopme.common.entity.Country;
 import com.shopme.common.entity.Customer;
 import com.shopme.setting.CountryRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.apache.commons.lang3.RandomStringUtils;
 @Service
+@Transactional
 public class CustomerService {
 
 	@Autowired
@@ -46,5 +50,17 @@ public class CustomerService {
 		// TODO Auto-generated method stub
 			String encodePassword =	passwordEncoder.encode(customer.getPassword());
 			customer.setPassword(encodePassword);
+	}
+	
+	public boolean verify(String verifycationCode) {
+		 Customer customer = customerRepo.findByVerificationCode(verifycationCode);
+		
+		 if(customer == null || customer.isEnabled()) {
+			 return false;
+		 }else {
+			 customerRepo.enable(customer.getId());
+			 return true;
+		 }
+		 
 	}
 }

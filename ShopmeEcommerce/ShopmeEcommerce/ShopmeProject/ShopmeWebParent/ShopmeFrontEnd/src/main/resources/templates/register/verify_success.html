@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments :: page_head('Verifycation Successed','none')"/>
+<head th:replace="fragments :: page_head(${pageTitle},'none')"/>
 
 <body>
 	<div class="container-fluid">
@@ -8,9 +8,10 @@
 		
 		<div>&nbsp;</div>
 		<div class="text-center">	
-			<h2>Customer Verification</h2>
-			<h4>Congratulation! Your account has been verified.</h4>
-			<p><a th:href="@{/login}">Login now</a></p>
+			<h2>Customer Registration</h2>
+			<h4>You have registered successfully as a customer</h4>
+			<p>Please check your email to verify our account.</p>
+			<p><a th:href="@{/login}">Login here</a></p>
 		</div>
 
 		<div>&nbsp;</div>

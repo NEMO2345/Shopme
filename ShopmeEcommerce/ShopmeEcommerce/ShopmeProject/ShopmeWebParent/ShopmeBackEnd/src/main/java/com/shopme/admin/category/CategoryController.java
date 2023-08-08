@@ -24,7 +24,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class CategoryController {
 	@Autowired
-	private CategoryService service;
+	private CategoryService categoryService;
 	
 	@GetMapping("/categories")
 	public String listFirstPage(@Param("sortDir") String sortDir,Model model) {
@@ -38,11 +38,12 @@ public class CategoryController {
 		if(sortDir == null || sortDir.isEmpty()) {
 			sortDir = "asc";
 		} 
-		CategoryPageInfo pageInfo = new CategoryPageInfo();
-		List<Category> listCategories = service.listByPage(pageInfo,pageNum,sortDir,keyword);
 		
-		long startCount = (pageNum - 1)*service.ROOT_CATEGORIES_PER_PAGE + 1;
-		long endCount = startCount + service.ROOT_CATEGORIES_PER_PAGE -1;
+		CategoryPageInfo pageInfo = new CategoryPageInfo();
+		List<Category> listCategories = categoryService.listByPage(pageInfo,pageNum,sortDir,keyword);
+		
+		long startCount = (pageNum - 1)*categoryService.ROOT_CATEGORIES_PER_PAGE + 1;
+		long endCount = startCount + categoryService.ROOT_CATEGORIES_PER_PAGE -1;
 		if(endCount > pageInfo.getTotalElements()) {
 			endCount = pageInfo.getTotalElements();
 		}
@@ -51,21 +52,23 @@ public class CategoryController {
 		
 		model.addAttribute("totalPages", pageInfo.getTotalPages());
 		model.addAttribute("totalItems", pageInfo.getTotalElements());
-		model.addAttribute("startCount", startCount);
-		model.addAttribute("endCount", endCount);
 		model.addAttribute("currentPage", pageNum);
 		model.addAttribute("sortField", "name");
 		model.addAttribute("sortDir", sortDir);
 		model.addAttribute("keyword", keyword);
+		model.addAttribute("startCount", startCount);
+		model.addAttribute("endCount", endCount);
+		
 		model.addAttribute("listCategories", listCategories);
 		model.addAttribute("reverseSortDir", reverseSortDir);
-		model.addAttribute("moduleURL", "/categories");
+		model.addAttribute("moduleURL", "/categories"); 
+		
 		return "categories/categories";
 	}
 	
 	@GetMapping("/categories/new")
 	public String newCategory(Model model) {
-		List<Category> listCategories = service.listCategoriesUsedInForm();
+		List<Category> listCategories = categoryService.listCategoriesUsedInForm();
 		model.addAttribute("category", new Category());
 		model.addAttribute("listCategories", listCategories);
 		model.addAttribute("pageTitle", "Create New Category");
@@ -81,13 +84,13 @@ public class CategoryController {
 			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 			category.setImage(fileName);
 			
-			Category savedCategory = service.save(category);
+			Category savedCategory = categoryService.save(category);
 			String uploadDir = "../category-images/" + savedCategory.getId();
 			FileUploadUtil.cleanDir(uploadDir);
 			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 			
 		} else {
-			service.save(category);
+			categoryService.save(category);
 		}
 		
 		
@@ -99,8 +102,8 @@ public class CategoryController {
 	public String editCategory(@PathVariable(name = "id") Integer id, Model model,
 			RedirectAttributes ra) {
 		try {
-			Category category = service.get(id);
-			List<Category> listCategories = service.listCategoriesUsedInForm();
+			Category category = categoryService.get(id);
+			List<Category> listCategories = categoryService.listCategoriesUsedInForm();
 			
 			model.addAttribute("category", category);
 			model.addAttribute("listCategories", listCategories);
@@ -116,7 +119,7 @@ public class CategoryController {
 	@GetMapping("/categories/{id}/enabled/{status}")
 	public String updateCategoryEnabledStatus(@PathVariable("id") Integer id,
 			@PathVariable("status") boolean enabled, RedirectAttributes redirectAttributes) {
-		service.updateCategoryEnabledStatus(id, enabled);
+		categoryService.updateCategoryEnabledStatus(id, enabled);
 		String status = enabled ? "enabled" : "disabled";
 		String message = "The category ID " + id + " has been " + status;
 		redirectAttributes.addFlashAttribute("message", message);
@@ -128,7 +131,7 @@ public class CategoryController {
 			Model model,
 			RedirectAttributes redirectAttributes) {
 		try {
-			service.delete(id);
+			categoryService.delete(id);
 			String categoryDir = "../category-images/" + id;
 			FileUploadUtil.removeDir(categoryDir);
 			
@@ -143,7 +146,7 @@ public class CategoryController {
 	}
 	@GetMapping("/categories/export/csv")
 	public void exportToCSV(HttpServletResponse response) throws IOException {
-		List<Category> listCategories = service.listCategoriesUsedInForm();
+		List<Category> listCategories = categoryService.listCategoriesUsedInForm();
 		CategoryCsvExporter exporter = new CategoryCsvExporter();
 		exporter.export(listCategories, response);
 	}

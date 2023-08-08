@@ -3,12 +3,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.common.entity.Brand;
 
 @Service
@@ -21,18 +18,9 @@ public class BrandService {
 	public List<Brand> listAll(){
 		return (List<Brand>) repo.findAll();
 	}
-	public Page<Brand> listByPage(int pageNum,String sortField, String sortDir,
-			String keyword){
-		Sort sort = Sort.by(sortField);
-		
-		 sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
-		 Pageable pageable = PageRequest.of(pageNum - 1, BRAND_PER_PAGE,sort);
-		 
-		 if(keyword != null) {
-			  return repo.findAll(keyword, pageable);
-		 } 
-		
-		 return repo.findAll(pageable);
+	public void listByPage(int pageNum,PagingAndSortingHelper helper){
+		helper.listEntities(pageNum,BRAND_PER_PAGE , repo);
+
 	}
 
 	
@@ -41,7 +29,7 @@ public class BrandService {
 	}
 	public Brand get(Integer id) throws BrandNotFoundException{
 		try {
-			return repo.findById(id).get();
+			return repo.findById(id);
 		}catch(NoSuchElementException ex) {
 			throw new BrandNotFoundException("could not fint any brand with ID" + id);
 			

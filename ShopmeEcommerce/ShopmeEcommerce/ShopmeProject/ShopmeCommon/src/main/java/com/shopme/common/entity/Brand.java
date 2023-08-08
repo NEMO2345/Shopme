@@ -2,6 +2,7 @@ package com.shopme.common.entity;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.IntPredicate;
 
 import org.springframework.data.annotation.Transient;
 
@@ -96,6 +97,16 @@ public class Brand {
 		if(this.id == null) return "/images/image-thumbnail.png";
 		
 		return "/brand-logos/" + this.id + "/" + this.logo;
+	}
+
+	public Brand get() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public IntPredicate isEmpty() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

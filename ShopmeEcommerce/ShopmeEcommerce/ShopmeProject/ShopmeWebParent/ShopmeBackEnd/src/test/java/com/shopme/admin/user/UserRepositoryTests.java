@@ -64,14 +64,14 @@ public class UserRepositoryTests {
 	
 	@Test
 	public void testGetUserById() {
-		User userNam = repo.findById(1).get();
+		User userNam = repo.findById(1);
 		System.out.println(userNam);
 		assertThat(userNam).isNotNull();
 	}
 	
 	@Test
 	public void testUpdateUserDetails() {
-		User userNam = repo.findById(1).get();
+		User userNam = repo.findById(1);
 		userNam.setEnabled(true);
 		userNam.setEmail("namjavaprogrammer@gmail.com");
 		
@@ -79,7 +79,7 @@ public class UserRepositoryTests {
 	}
 	@Test
 	public void testUpdateUserRoles() {
-		User userRavi = repo.findById(2).get();
+		User userRavi = repo.findById(2);
 		Role roleEditor = new Role(3);
 		Role roleSalesperson = new Role(2);
 		

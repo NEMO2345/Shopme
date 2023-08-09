@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
+import com.shopme.common.entity.AuthenticationType;
 import com.shopme.common.entity.Country;
 import com.shopme.common.entity.Customer;
 
@@ -151,8 +152,26 @@ public class CustomerRepositoryTests {
 		
 		assertThat(customer).isNotNull();
 
+	}
+	
+	/*
+	 * @Test public void testUpdateAuthenticationType() { Integer id = 1;
+	 * repo.updateAuthenticationType(id, AuthenticationType.FACEBOOK);
+	 * 
+	 * Customer customer = repo.findById(1).get();
+	 * assertThat(customer.getAuthenticationType()).isEqualTo(AuthenticationType.
+	 * FACEBOOK);
+	 * 
+	 * }
+	 */
+	@Test
+	public void testUpdateAuthenticationType() {
+	    Customer customer = repo.findById(1).get();
+	    customer.setAuthenticationType(AuthenticationType.DATABASE);
+	    repo.save(customer);
 
-		
+	    Customer updatedCustomer = repo.findById(1).get();
+	    assertThat(updatedCustomer.getAuthenticationType()).isEqualTo(AuthenticationType.DATABASE);
 	}
 	
 	

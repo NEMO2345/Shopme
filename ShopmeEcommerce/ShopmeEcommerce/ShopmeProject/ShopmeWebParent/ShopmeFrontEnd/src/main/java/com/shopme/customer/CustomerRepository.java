@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import com.shopme.common.entity.AuthenticationType;
 import com.shopme.common.entity.Customer;
 
 public interface CustomerRepository extends CrudRepository<Customer, Integer> {
@@ -19,6 +20,8 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer> {
 	@Modifying
 	public void enable(Integer id);
 	
-	
+	@Query("update Customer c set c.authenticationType =?1 where c.id=?1")
+	@Modifying
+	public void updateAuthenticationType(Integer customerId,AuthenticationType type);
 	
 }

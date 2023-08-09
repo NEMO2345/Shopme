@@ -3,10 +3,12 @@ package com.shopme.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -26,8 +28,23 @@ public class WebSecurityConfig {
 			
         http
             .authorizeHttpRequests(authorize -> authorize
-            	.anyRequest().permitAll()
-            );
+            		.requestMatchers("/customer").authenticated()
+            		.anyRequest().permitAll()
+            )
+            .formLogin(formLogin -> formLogin
+                    .loginPage("/login")
+                    .usernameParameter("email")
+                    .permitAll()
+                   
+                )
+                .logout(logout -> logout
+                		.permitAll() 
+                )
+                .rememberMe(remember-> remember
+                		.key("Adjhbsdbs_2312342y378")
+                		.tokenValiditySeconds(7*24*60*60)
+                )
+                ;
       
         return http.build();
     }
@@ -36,5 +53,19 @@ public class WebSecurityConfig {
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring().requestMatchers("/images/**","/js/**","/webjars/**");
 	}
+	
+	@Bean
+	public UserDetailsService userDetailsService() {
+		return new CustomerUserDetailsService();
+	}
 
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		
+		authProvider.setUserDetailsService(userDetailsService());
+		authProvider.setPasswordEncoder(passwordEncoder());
+		
+		return authProvider;
+	}
 }

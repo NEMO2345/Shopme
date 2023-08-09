@@ -24,7 +24,6 @@ public class ProductService {
 	public static final int PRODUCTS_PER_PAGE = 10;
 	@Autowired
 	private ProductRepository repo;
-	private Page<Product> page;
 	
 	public List<Product> listAll(){
 		return (List<Product>)repo.findAll();

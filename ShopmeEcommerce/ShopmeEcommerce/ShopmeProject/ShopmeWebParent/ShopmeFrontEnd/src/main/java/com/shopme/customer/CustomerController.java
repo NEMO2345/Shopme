@@ -44,7 +44,7 @@ public class CustomerController {
 		
 		customerService.registerCustomer(customer);
 		
-		//sendVerificationEmail(request,customer);
+		sendVerificationEmail(request,customer);
 		
 		model.addAttribute("pageTitle", "Registration Succeeded!!");
 		

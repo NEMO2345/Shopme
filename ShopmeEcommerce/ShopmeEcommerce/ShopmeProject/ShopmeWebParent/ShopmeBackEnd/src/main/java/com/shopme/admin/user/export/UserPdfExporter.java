@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.lowagie.text.Document;
+import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
 import com.lowagie.text.PageSize;
@@ -33,7 +34,7 @@ public class UserPdfExporter extends AbstractExporter{
 		font.setColor(Color.BLUE);
 		
 		Paragraph paragraph = new Paragraph("List of User", font);
-		paragraph.setAlignment(paragraph.ALIGN_CENTER);
+		paragraph.setAlignment(Element.ALIGN_CENTER);
 		
 		document.add(paragraph);
 		

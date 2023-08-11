@@ -15,7 +15,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
-    show-sql: true
+    show-sql: false
   security:
     oauth2:
       client:
@@ -26,6 +26,11 @@ spring:
             scope:
               - email
               - profile
-
+          facebook:
+            client-id: 1681016308970442
+            client-secret: 9302f34bd5264d28d6c45d671919b735
+            scope:
+              - email
+              - public_profile
   main:
     allow-circular-references: true

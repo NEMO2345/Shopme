@@ -68,7 +68,8 @@ public class CustomerService {
 	    customerInForm.setCreateTime(customerInDB.getCreateTime());
 	    customerInForm.setVerificationCode(customerInDB.getVerificationCode());
 	    customerInForm.setAuthenticationType(customerInDB.getAuthenticationType());
-
+	    customerInForm.setResetPasswordToken(customerInDB.getResetPasswordToken());
+	    
 	    customerRepo.save(customerInForm);
 	}
 	

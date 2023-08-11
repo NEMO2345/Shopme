@@ -6,15 +6,11 @@
 		<div class="form-group row">
 				<label class="col-sm-2 col-form-label">Product Name:</label>
 				<div class="col-sm-10">
-					<th:block th:if="${!#authorization.expression('hasAuthority(''Admin'')') && !#authorization.expression('hasAuthority(''Editor'')')}">
-					 	<th:block th:if="${#authorization.expression('hasAuthority(''Saleperson'')')}">
-					 		<input type="text" class="form-control" th:field="*{name}" 
-									readonly="readonly"/>
-						</th:block>
+					<th:block th:if="${isReadOnlyForSalesPerson}">
+						<input type="text" class="form-control" th:field="*{name}" readonly="readonly"/>
 					</th:block>
-					<th:block th:if="${#authorization.expression('hasAuthority(''Admin'')') || #authorization.expression('hasAuthority(''Editor'')')}">
-						<input type="text" class="form-control" th:field="*{name}" 
-									required minlength="3" maxlength="256" />
+					<th:block th:unless="${isReadOnlyForSalesPerson}">
+						<input type="text" class="form-control" th:field="*{name}" required minlength="3" maxlength="256" />
 					</th:block>
 				</div>
 		</div>
@@ -22,17 +18,12 @@
 		<div class="form-group row">
 				<label class="col-sm-2 col-form-label">Alias:</label>
 				<div class="col-sm-10">
-					<th:block th:if="${!#authorization.expression('hasAuthority(''Admin'')') && !#authorization.expression('hasAuthority(''Editor'')')}">
-					 	<th:block th:if="${#authorization.expression('hasAuthority(''Saleperson'')')}">
-					 		<input type="text" class="form-control" th:field="*{alias}"  
-									placeholder="Default is product name (spaces are replaced by dashes)"
-									readonly="readonly"/>
-						</th:block>
+					<th:block th:if="${isReadOnlyForSalesPerson}">
+					 	<input type="text" class="form-control" th:field="*{alias}"  
+									placeholder="Default is product name (spaces are replaced by dashes)" readonly="readonly"/>
 					</th:block>
-					</th:block>
-					<th:block th:if="${#authorization.expression('hasAuthority(''Admin'')') || #authorization.expression('hasAuthority(''Editor'')')}">
-						<input type="text" class="form-control" th:field="*{alias}"  
-									minlength="3" maxlength="256" 
+					<th:block th:unless="${isReadOnlyForSalesPerson}">
+						<input type="text" class="form-control" th:field="*{alias}"  minlength="3" maxlength="256" 
 									placeholder="Default is product name (spaces are replaced by dashes)"/>
 					</th:block>
 				</div>
@@ -41,17 +32,15 @@
 		<div class="form-group row">
 				<label class="col-sm-2 col-form-label">Brand:</label>
 				<div class="col-sm-10">
-					<th:block th:if="${#authorization.expression('hasAuthority(''Admin'')') || #authorization.expression('hasAuthority(''Editor'')')}">
+					<th:block th:unless="${isReadOnlyForSalesPerson}">
 						<select th:field="*{brand}" class="form-control" required>
 							<th:block th:each="brand: ${listBrands}">
 								<option th:value="${brand.id}">[[${brand.name}]]</option>
 							</th:block>
 						</select>
 					</th:block>
-					<th:block th:if="${!#authorization.expression('hasAuthority(''Admin'')') && !#authorization.expression('hasAuthority(''Editor'')')}">
-					 	<th:block th:if="${#authorization.expression('hasAuthority(''Saleperson'')')}">
+					<th:block th:if="${isReadOnlyForSalesPerson}">
 					 		<input type="text" class="form-control" th:value="${product.brand.name}" readonly/>
-						</th:block>
 					</th:block>
 				</div>
 		</div>
@@ -73,25 +62,21 @@
 									</select>
 								</th:block>
 						</th:block>
-						<th:block th:if="${!#authorization.expression('hasAuthority(''Admin'')') && !#authorization.expression('hasAuthority(''Editor'')')}">
-					 		<th:block th:if="${#authorization.expression('hasAuthority(''Saleperson'')')}">
+						<th:block th:if="${isReadOnlyForSalesPerson}">
 								<input type="text" class="form-control" th:value="${product.category.name}" readonly/>
-							</th:block>
 						</th:block>
 				</div>
 		</div>
 			<div class="form-group row">
 				<label class="col-sm-2 col-form-label">Enabled:</label>
 				<div class="col-sm-10">
-					<th:block th:if="${!#authorization.expression('hasAuthority(''Admin'')') && !#authorization.expression('hasAuthority(''Editor'')')}">
-					 	<th:block th:if="${#authorization.expression('hasAuthority(''Saleperson'')')}">
+					<th:block th:if="${isReadOnlyForSalesPerson}">
 					 		<th:block th:if="${product.category != null}">
 								<input type="checkbox" th:field="*{enabled}" />
-							</th:block>
 						</th:block>
 					</th:block>	
 					
-					<th:block th:if="${#authorization.expression('hasAuthority(''Admin'')') || #authorization.expression('hasAuthority(''Editor'')')}">				
+					<th:block th:unless="${isReadOnlyForSalesPerson}">				
 						<input type="checkbox" th:field="*{enabled}" />
 					</th:block>
 				</div>
@@ -100,12 +85,10 @@
 			<div class="form-group row">
 				<label class="col-sm-2 col-form-label">In-Stock:</label>
 					<div class="col-sm-10">
-						<th:block th:if="${!#authorization.expression('hasAuthority(''Admin'')') && !#authorization.expression('hasAuthority(''Editor'')')}">
-					 		<th:block th:if="${#authorization.expression('hasAuthority(''Saleperson'')')}">
+						<th:block th:if="${isReadOnlyForSalesPerson}">
 					 		<input type="checkbox" th:field="*{inStock}" disabled="disabled" />
-							</th:block>
 						</th:block>
-						<th:block th:if="${#authorization.expression('hasAuthority(''Admin'')') || #authorization.expression('hasAuthority(''Editor'')')}">				
+						<th:block th:unless="${isReadOnlyForSalesPerson}">				
 								<input type="checkbox" th:field="*{inStock}"  />
 						</th:block>
 				</div>

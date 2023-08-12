@@ -1,3 +1,5 @@
+decimalSeparator = decimalPointType == 'COMMA' ? ',' : '.';
+thousandsSeparator = thousandsPointType == 'COMMA' ? ',' : '.';
 $(document).ready(function(){
 	
 	$(".linkMinus").on("click",function(evt){
@@ -65,7 +67,7 @@ function updateQuantity(productId,quantity){
 
 function updateSubTotal(updatedSubtotal, productId){
 	formattedAubtotal = $.number(updatedSubtotal, 2);
-	$("#subtotal" + productId).text(formattedAubtotal);
+	$("#subtotal" + productId).text(formatCurrency(updatedSubtotal));
 }
 function updateTotal(){
 	total = 0.0;
@@ -73,14 +75,13 @@ function updateTotal(){
 	
 	$(".subtotal").each(function(index,element){
 		productCount++;
-		total += parseFloat(element.innerHTML.replaceAll(",",""));
+		total += parseFloat(clearCurrencyFormat(element.innerHTML));
 	});
 	
 	if(productCount < 1){
 		showEmptyShoppingCart();
 	}else{
-		formattedTotal = $.number(total, 2);
-		$("#total").text(formattedTotal);
+		$("#total").text(formatCurrency(total));
 	}	
 }
 
@@ -125,3 +126,11 @@ function updateCountNumbers(){
 	});
 }
 
+function formatCurrency(amount){
+	return $.number(amount,decimalDigits,decimalSeparator,thousandsSeparator);
+}
+
+function clearCurrencyFormat(){
+	result = numberString.replaceAll(thousandsSeparator,"");
+	return result.replaceAll(decimalSeparator,".");
+}

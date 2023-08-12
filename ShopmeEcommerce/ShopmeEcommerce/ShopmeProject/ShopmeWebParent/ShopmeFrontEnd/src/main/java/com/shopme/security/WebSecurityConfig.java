@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -58,6 +59,8 @@ public class WebSecurityConfig {
                 .rememberMe(remember-> remember
                 		.key("Adjhbsdbs_2312342y378")
                 		.tokenValiditySeconds(7*24*60*60)
+                ).sessionManagement(sessionManagement -> sessionManagement
+                		.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 )
                 ;
       

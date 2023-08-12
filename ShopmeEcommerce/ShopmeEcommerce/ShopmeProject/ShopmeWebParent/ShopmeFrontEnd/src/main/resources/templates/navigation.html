@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 		xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+		<link rel="stylesheet" href="static/fontawesome/all.css">
 <body>
 	<div th:fragment="header_menu">
 			<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
@@ -84,7 +85,9 @@
 							</li>
 							
 							<li class="nav-item">
-								<a class="nav-link" href="">Carts</a>
+  								<a class="nav-link" th:href="@{/cart}">
+   									 <i class="fas fa-shopping-cart fa-2x"></i>
+							  </a>
 							</li>
 							
 							<li class="nav-item">
@@ -106,7 +109,7 @@
 				<div class="collapse navbar-collapse" id="bottomNavbar">
 					<ul class="navbar-nav">
 						<li class="nav-item">
-							<a class="nav-link " href="" >About Us</a>	
+							<a class="nav-link " href="" ><p>About Us</p></a>	
 						<li/>
 						
 						<li class="nav-item">

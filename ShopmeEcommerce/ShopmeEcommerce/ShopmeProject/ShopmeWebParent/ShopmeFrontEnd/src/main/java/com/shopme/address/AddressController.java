@@ -105,8 +105,7 @@ public class AddressController {
 	}
 	
 	@GetMapping("/address_book/default/{id}")
-	public String setDefaultAddress(@PathVariable("id") Integer addressId,
-			HttpServletRequest request) {
+	public String setDefaultAddress(@PathVariable("id") Integer addressId,HttpServletRequest request) {
 		
 		Customer customer = getAuthenticatedCustomer(request);
 		addressService.setDefaultAddress(addressId, customer.getId());

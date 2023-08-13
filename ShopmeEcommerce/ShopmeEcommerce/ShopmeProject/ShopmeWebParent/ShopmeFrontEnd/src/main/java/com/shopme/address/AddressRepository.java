@@ -22,4 +22,13 @@ public interface AddressRepository extends JpaRepository<Address, Integer> {
     @Query("delete from Address a where a.id = ?1 and a.customer.id = ?2")
     void deleteByIdAndCustomer(Integer addressId, Integer customerId);
 
+    @Modifying
+    @Query("update Address a set a.defaultForShipping = true where a.id = ?1")
+    public void setDefaultAddress(Integer id);
+    
+    @Modifying
+    @Query("update Address a set a.defaultForShipping = false where a.id <> ?1 and a.customer.id = ?2")
+    public void setNoneDefaultForOthers(Integer defaultAddressId, Integer customerId);
+
+    
 }

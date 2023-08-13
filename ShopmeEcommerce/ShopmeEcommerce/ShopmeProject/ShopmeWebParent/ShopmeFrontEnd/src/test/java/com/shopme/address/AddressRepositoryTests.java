@@ -80,7 +80,6 @@ public class AddressRepositoryTests {
 		assertThat(updateAddress.getPhoneNumber()).isEqualTo(phoneNumber);
 
 	}
-	
 
 	@Test 
 	public void testDeleteByIdAndCustomer() {
@@ -93,5 +92,24 @@ public class AddressRepositoryTests {
 		
 		assertThat(deleteAddress).isNull();
 
+	}
+	
+	@Test
+	public void testSetDefault() {
+		
+		Integer addressId = 6;
+		repo.setDefaultAddress(addressId);
+		
+		Address address = repo.findById(addressId).get();
+		
+		assertThat(address.isDefaultForShipping()).isTrue();
+	}
+	
+	@Test
+	public void testSetNoneDefaultAddresses() {
+	    Integer addressId = 6;
+	    Integer customerId = 9;
+
+	    repo.setNoneDefaultForOthers(addressId, customerId);
 	}
 }

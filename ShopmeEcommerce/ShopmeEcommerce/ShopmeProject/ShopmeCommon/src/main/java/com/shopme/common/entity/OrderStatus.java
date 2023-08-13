@@ -1,0 +1,5 @@
+package com.shopme.common.entity;
+
+public enum OrderStatus {
+	NEW,CANCELLED,PROCESSING,PAKAGED,PICKED,SHIPPING,DELIVERED,RETURNED,PAID,REFUNDED
+}

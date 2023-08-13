@@ -70,14 +70,14 @@ public class AddressRepositoryTests {
 	@Test 
 	public void testUpdate() {
 		Integer addressId = 4;
-		//String phoneNumber = "999-999-999";
+		String phoneNumber = "999-999-999";
 		
 		Address address = repo.findById(addressId).get();
 		address.setDefaultForShipping(true);
 		
 		Address updateAddress = repo.save(address);
 		
-		//assertThat(updateAddress.getPhoneNumber()).isEqualTo(phoneNumber);
+		assertThat(updateAddress.getPhoneNumber()).isEqualTo(phoneNumber);
 
 	}
 	

@@ -68,6 +68,18 @@ public class OrderController {
 			  } 
 		}
 
+	  @GetMapping("/orders/delete/{id}")
+	  public String deleteOrderDetails(@PathVariable(name="id") Integer id , Model model,
+			  RedirectAttributes ra){ 
+		  try {
+			  orderService.delete(id);
+			  ra.addFlashAttribute("message", "The order with ID " + id + " has been deleted successfully");
+			  }catch(OrderNotFoundException ex) {
+				  	ra.addFlashAttribute("message", ex.getMessage());
+			} 
+		  return defaultRedirectURL; 
+	}
+	 
 	/*
 	 * @GetMapping("/shipping_rates/new") public String newRate(Model model) {
 	 * List<Country> listCountries = service.listAllCountries();

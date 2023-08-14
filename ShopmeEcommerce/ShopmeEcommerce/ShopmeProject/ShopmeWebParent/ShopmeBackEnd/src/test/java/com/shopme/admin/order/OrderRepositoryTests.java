@@ -34,7 +34,7 @@ public class OrderRepositoryTests {
 	public void testCreateNewOrderWithSingleProduct() {
 		
 		Customer customer =	entityManager.find(Customer.class, 8);
-		Product product = entityManager.find(Product.class, 21);
+		Product product = entityManager.find(Product.class, 17);
 		
 		Order mainOder = new Order();
 		mainOder.setOrderTime(new Date());
@@ -75,8 +75,8 @@ public class OrderRepositoryTests {
 	public void testCreateNewOrderWithMultipleProduct() {
 		
 		Customer customer =	entityManager.find(Customer.class, 5);
-		Product product1 = entityManager.find(Product.class, 18);
-		Product product2 = entityManager.find(Product.class,21);
+		Product product1 = entityManager.find(Product.class, 15);
+		Product product2 = entityManager.find(Product.class,16);
 		
 		Order mainOder = new Order();
 		mainOder.setOrderTime(new Date());

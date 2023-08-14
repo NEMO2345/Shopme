@@ -66,7 +66,8 @@
 		</table>
 	</div>
 	
-	<div th:replace="fragments :: pagination('orders')"></div>						
+	<div th:replace="fragments :: pagination('orders')"></div>	
+						
 	<div th:replace="modal_fragments :: confirm_modal"></div>
 	
 	<div class="modal fade" id="customerDetailModal">
@@ -94,7 +95,16 @@
 	$(document).ready(function(){
 			handleLinkViewCustomerDetails();
 			handleLinkViewOrderDetails();
+			handleLinkDeleteOrderDetails();
+			
 	});
+	function handleLinkDeleteOrderDetails(){
+		$(".link-delete").on("click", function(e){
+			e.preventDefault();
+			showDeleteConfirModal($(this),'order');
+			
+		});
+	}
 	
 	function handleLinkViewCustomerDetails(){
 		$(".linkOrderDetail").on("click",function(e){

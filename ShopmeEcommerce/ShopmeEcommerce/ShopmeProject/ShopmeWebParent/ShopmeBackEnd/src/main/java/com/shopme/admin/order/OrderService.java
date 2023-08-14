@@ -48,10 +48,20 @@ public class OrderService {
 	}
 
 	public Order get(Integer id) throws OrderNotFoundException{
+
 		try{
 			return repo.findById(id).get();
 		}catch(NoSuchElementException e) {
 			throw new OrderNotFoundException("Could not find nay orders eith ID " + id);
 		}
+	}
+
+	public void delete(Integer id) throws OrderNotFoundException{
+		Long count = repo.countById(id);
+		if(count == null || count == 0) {
+			throw new OrderNotFoundException("Could not find any orders with ID "+ id);
+			
+		}
+		repo.deleteById(id);
 	}
 }

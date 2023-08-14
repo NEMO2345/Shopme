@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.shopme.admin.paging.SearchRepository;
-import com.shopme.common.entity.Order;
+import com.shopme.common.entity.order.Order;
 
 import jakarta.transaction.Transactional;
 

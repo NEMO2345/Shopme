@@ -16,7 +16,7 @@ import org.springframework.util.StringUtils;
 
 import com.shopme.admin.FileUploadUtil;
 import com.shopme.common.entity.Currency;
-import com.shopme.common.entity.Setting;
+import com.shopme.common.entity.setting.Setting;
 
 import jakarta.servlet.http.HttpServletRequest;
 

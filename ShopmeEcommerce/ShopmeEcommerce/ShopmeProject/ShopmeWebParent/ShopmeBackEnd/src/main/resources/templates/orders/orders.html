@@ -52,7 +52,7 @@
 					
 					<td>
 						
-						<a class="fas fa-file-alt fa-2x icon-green link-detail"
+						<a class="fas fa-file-alt fa-2x icon-green linkOrderDetail"
 							th:href="@{'/orders/detail/' + ${order.id}}"
 							title="View details of this order">
 						</a>
@@ -69,8 +69,15 @@
 	<div th:replace="fragments :: pagination('orders')"></div>						
 	<div th:replace="modal_fragments :: confirm_modal"></div>
 	
-	<div class="modal fade" id="detailModal">
+	<div class="modal fade" id="customerDetailModal">
 		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="orderDetailModal">
+		<div class="modal-dialog modal-xl">
 			<div class="modal-content">
 			</div>
 		</div>
@@ -86,13 +93,21 @@
 	
 	$(document).ready(function(){
 			handleLinkViewCustomerDetails();
+			handleLinkViewOrderDetails();
 	});
 	
 	function handleLinkViewCustomerDetails(){
+		$(".linkOrderDetail").on("click",function(e){
+			e.preventDefault();
+			linkDetailURL = $(this).attr("href");
+			$("#customerDetailModal").modal("show").find(".modal-content").load(linkDetailURL);
+		});
+	}
+	function handleLinkViewOrderDetails(){
 		$(".linkCustomerDetail").on("click",function(e){
 			e.preventDefault();
 			linkDetailURL = $(this).attr("href");
-			$("#detailModal").modal("show").find(".modal-content").load(linkDetailURL);
+			$("#orderDetailModal").modal("show").find(".modal-content").load(linkDetailURL);
 		});
 	}
 </script>

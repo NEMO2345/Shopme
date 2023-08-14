@@ -16,6 +16,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "orders")
@@ -75,6 +76,7 @@ public class Order {
 	
 	@OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
 	private Set<OrderDetail> orderDetails = new HashSet<>();
+	
 
 	public Integer getId() {
 		return id;
@@ -270,5 +272,15 @@ public class Order {
 				+ ", customer=" + customer.getFullName() + "]";
 	}
 
+	@Transient
+	public String getDestination() {
+		String destination = city + " , " ;
+		if(state != null && !state.isEmpty()) {
+			destination+= state + " . ";
+		}
+		destination += country;
+		
+		return destination;
+	}
 	
 }

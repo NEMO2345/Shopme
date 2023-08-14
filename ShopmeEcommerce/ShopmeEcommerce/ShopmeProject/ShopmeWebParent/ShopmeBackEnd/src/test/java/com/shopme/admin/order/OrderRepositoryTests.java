@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shopme.common.entity.Customer;
 import com.shopme.common.entity.Order;
@@ -23,6 +24,7 @@ import com.shopme.common.entity.Product;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
+@Transactional
 public class OrderRepositoryTests {
 
 	@Autowired private OrderRepository repo;
@@ -31,8 +33,8 @@ public class OrderRepositoryTests {
 	@Test
 	public void testCreateNewOrderWithSingleProduct() {
 		
-		Customer customer =	entityManager.find(Customer.class, 9);
-		Product product = entityManager.find(Product.class, 15);
+		Customer customer =	entityManager.find(Customer.class, 8);
+		Product product = entityManager.find(Product.class, 21);
 		
 		Order mainOder = new Order();
 		mainOder.setOrderTime(new Date());
@@ -68,18 +70,19 @@ public class OrderRepositoryTests {
 	}
 	
 
+	
 	@Test
 	public void testCreateNewOrderWithMultipleProduct() {
 		
-		Customer customer =	entityManager.find(Customer.class, 9);
+		Customer customer =	entityManager.find(Customer.class, 5);
 		Product product1 = entityManager.find(Product.class, 18);
-		Product product2 = entityManager.find(Product.class, 21);
+		Product product2 = entityManager.find(Product.class,21);
 		
 		Order mainOder = new Order();
 		mainOder.setOrderTime(new Date());
 		mainOder.setCustomer(customer);
 		mainOder.copyAddressFromCustomer();
-		
+
 		OrderDetail orderDetail1 = new OrderDetail();
 		orderDetail1.setProduct(product1);
 		orderDetail1.setOrder(mainOder);
@@ -108,8 +111,8 @@ public class OrderRepositoryTests {
 		mainOder.setSubtotal(subtotal);
 		mainOder.setTotal(subtotal + 13);
 		
-		mainOder.setPaymentMethod(PaymentMethod.COD);
-		mainOder.setStatus(OrderStatus.PROCESSING);
+		mainOder.setPaymentMethod(PaymentMethod.CREDIT_CAD);
+		mainOder.setStatus(OrderStatus.REFUNDED);
 		mainOder.setDeliverDate(new Date());
 		mainOder.setDeliverDays(3);
 		

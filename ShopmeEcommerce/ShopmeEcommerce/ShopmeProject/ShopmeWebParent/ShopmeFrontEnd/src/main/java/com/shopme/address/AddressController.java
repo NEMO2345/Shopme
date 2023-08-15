@@ -102,14 +102,24 @@ public class AddressController {
 		ra.addFlashAttribute("message", "The address ID " + addressId + " has been deleted.");
 		
 		return "redirect:/address_book";
-	}
+	} 
 	
 	@GetMapping("/address_book/default/{id}")
-	public String setDefaultAddress(@PathVariable("id") Integer addressId,HttpServletRequest request) {
+	public String setDefaultAddress(@PathVariable("id") Integer addressId,
+			HttpServletRequest request) {
 		
 		Customer customer = getAuthenticatedCustomer(request);
 		addressService.setDefaultAddress(addressId, customer.getId());
 		
-		return "redirect:/address_book";
+		String redirectOption = request.getParameter("redirect");
+		String redirectURL = "redirect:/address_book";
+		
+		if("cart".equals(redirectOption)) {
+			redirectURL = "redirect:/cart";
+		}
+		
+		return redirectURL;
 	}
+	
+	
 }

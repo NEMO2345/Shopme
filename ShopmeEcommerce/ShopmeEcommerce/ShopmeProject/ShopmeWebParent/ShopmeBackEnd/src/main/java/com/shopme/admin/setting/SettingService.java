@@ -46,4 +46,8 @@ public class SettingService {
 	public List<Setting> getPaySettings() {
 		return repo.findByCategory(SettingCategory.PAYMENT);
 	}
+
+	public List<Setting> getCurrencySettings() {
+		return repo.findByCategory(SettingCategory.CURRENCY);
+	}
 }

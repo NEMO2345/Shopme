@@ -43,7 +43,7 @@ public class SettingService {
 		return repo.findByCategory(SettingCategory.MAIL_TEMPLATES);
 	}
 
-	public List<Setting> getCurrencySettings() {
-		return repo.findByCategory(SettingCategory.CURRENCY);
+	public List<Setting> getPaySettings() {
+		return repo.findByCategory(SettingCategory.PAYMENT);
 	}
 }

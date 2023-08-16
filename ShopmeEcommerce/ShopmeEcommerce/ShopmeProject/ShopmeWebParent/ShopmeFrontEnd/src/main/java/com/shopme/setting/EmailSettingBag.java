@@ -19,14 +19,6 @@ public class EmailSettingBag extends SettingBag {
 	 public int getPort() { 
 		 return Integer.parseInt(super.getValue("MAIL_PORT"));
 	 }
-	 
-	/*
-	 * public int getPort() { String portValue = super.getValue("MAIL_PORT"); if
-	 * (portValue != null && !portValue.isEmpty()) { return
-	 * Integer.parseInt(portValue); } else { // Xử lý khi chuỗi rỗng hoặc null // Ví
-	 * dụ: Trả về giá trị mặc định hoặc ném một ngoại lệ phù hợp return 0; // Giá
-	 * trị mặc định là 0 } }
-	 */
 	
 	public String getUsername() {
 		return super.getValue("MAIL_USERNAME");
@@ -58,5 +50,12 @@ public class EmailSettingBag extends SettingBag {
 	
 	public String getCustomerVerifyContent() {
 		return super.getValue("CUSTOMER_VERIFY_CONTENT");
+	}
+	
+	public String getOrderConfirmationSubject() {
+		return super.getValue("ORDER_CONFIRMATION_SUBJECT");
+	}
+	public String getOrderConfirmationContent() {
+		return super.getValue("CUSTOMER_CONFIRMATION_CONTENT");
 	}
 }

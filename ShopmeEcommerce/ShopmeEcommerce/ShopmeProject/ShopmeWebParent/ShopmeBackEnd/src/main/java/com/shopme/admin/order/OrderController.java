@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.shopme.admin.paging.PagingAndShortingParam;
 import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.admin.setting.SettingService;
+import com.shopme.common.entity.Country;
 import com.shopme.common.entity.order.Order;
 import com.shopme.common.entity.setting.Setting;
 
@@ -79,65 +80,29 @@ public class OrderController {
 		  return defaultRedirectURL; 
 	}
 	 
-	/*
-	 * @GetMapping("/shipping_rates/new") public String newRate(Model model) {
-	 * List<Country> listCountries = service.listAllCountries();
-	 * 
-	 * model.addAttribute("rate", new ShippingRate());
-	 * model.addAttribute("listCountries", listCountries);
-	 * model.addAttribute("pageTitle", "New Rate");
-	 * 
-	 * return "shipping_rates/shipping_rate_form"; }
-	 * 
-	 * @PostMapping("/shipping_rates/save") public String saveRate(ShippingRate
-	 * rate, RedirectAttributes ra) {
-	 * 
-	 * try { service.save(rate);
-	 * ra.addFlashAttribute("message","The shipping has been saved successfully");
-	 * }catch(ShippingRateAlreadyExistsException ex) {
-	 * ra.addFlashAttribute("message",ex.getMessage());
-	 * 
-	 * } return defaultRedirectURL; }
-	 * 
-	 * @GetMapping("/shipping_rates/edit/{id}") public String
-	 * editRate(@PathVariable("id") Integer id, Model model, RedirectAttributes ra)
-	 * { try { ShippingRate rate = service.get(id); List<Country> listCountries =
-	 * service.listAllCountries();
-	 * 
-	 * model.addAttribute("listCountries", listCountries);
-	 * model.addAttribute("rate", rate); model.addAttribute("pageTitle",
-	 * "Edit Rate (ID: " + id + ")");
-	 * 
-	 * return "shipping_rates/shipping_rate_form";
-	 * 
-	 * } catch (ShippingRateNotFoundException e) { ra.addFlashAttribute("message",
-	 * e.getMessage());
-	 * 
-	 * return defaultRedirectURL; }
-	 * 
-	 * }
-	 * 
-	 * @Transactional
-	 * 
-	 * @GetMapping("/shipping_rates/cod/{id}/enabled/{supported}") public String
-	 * updateCODSurport(@PathVariable("id") Integer id,
-	 * 
-	 * @PathVariable(name = "supported") Boolean supported, Model model,
-	 * RedirectAttributes ra) {
-	 * 
-	 * try { service.updateSODSurpport(id, supported);
-	 * ra.addFlashAttribute("message", "COD surpport for shipping rate ID " + id +
-	 * " has been updated."); }catch (ShippingRateNotFoundException e) {
-	 * ra.addFlashAttribute("message", e.getMessage()); } return defaultRedirectURL;
-	 * }
-	 * 
-	 * @GetMapping("/shipping_rates/delete/{id}") public String
-	 * deleteRate(@PathVariable(name="id") Integer id,Model model,
-	 * RedirectAttributes ra){ try { service.delete(id);
-	 * ra.addFlashAttribute("message", "The shipping rate ID " + id +
-	 * " has been deleted successfully"); }catch(ShippingRateNotFoundException ex) {
-	 * ra.addFlashAttribute("message", ex.getMessage()); } return
-	 * defaultRedirectURL; }
-	 */
+
+	 @GetMapping("/orders/edit/{id}")
+	 public String editOrder(@PathVariable("id") Integer id, Model model, RedirectAttributes ra,
+			 HttpServletRequest request) { 
+		 
+		 try {
+			 Order order = orderService.get(id);
+			 
+			 List<Country> listCountries = orderService.listAllCountries();
+	  
+			 model.addAttribute("listCountries", listCountries);
+			 model.addAttribute("order", order);
+			 model.addAttribute("pageTitle","Edit Order (ID: " + id + ")");
+	  
+	  return "orders/order_form";
+	  
+	  } catch (OrderNotFoundException e) {
+		  
+		  ra.addFlashAttribute("message", e.getMessage());
+		  return defaultRedirectURL; 
+		  }
+	  
+	  }
+	  
 	
 }

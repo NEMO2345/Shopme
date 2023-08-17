@@ -1,10 +1,14 @@
  package com.shopme.common.entity.order;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
 
 import com.shopme.common.entity.AbstractAddress;
 import com.shopme.common.entity.Address;
@@ -244,6 +248,11 @@ public class Order extends AbstractAddress{
 		this.orderTracks = orderTracks;
 	}
 	
+	@Transient
+	public String getdeliverDateOnForm() {
+		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+		return dateFormatter.format(this.deliverDate);
+	}
 	
 	
 }

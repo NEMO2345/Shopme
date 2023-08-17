@@ -168,20 +168,20 @@ public class OrderRepositoryTests {
 	
 	@Test
 	public void testUpdateOrderTracks() {
-		Integer orderId = 14;
+		Integer orderId = 17;
 		Order order = repo.findById(orderId).get();
 		
 		OrderTrack newTrack = new OrderTrack();
 		newTrack.setOrder(order);
 		newTrack.setUpdatedTime(new Date());
-		newTrack.setStatus(OrderStatus.NEW);
-		newTrack.setNotes(OrderStatus.NEW.defaultDescription());
+		newTrack.setStatus(OrderStatus.RETURNED);
+		newTrack.setNotes(OrderStatus.RETURNED.defaultDescription());
 		
 		OrderTrack ProcessingTrack = new OrderTrack();
 		ProcessingTrack.setOrder(order);
 		ProcessingTrack.setUpdatedTime(new Date());
-		ProcessingTrack.setStatus(OrderStatus.PROCESSING);
-		ProcessingTrack.setNotes(OrderStatus.PROCESSING.defaultDescription());
+		ProcessingTrack.setStatus(OrderStatus.RETURNED);
+		ProcessingTrack.setNotes(OrderStatus.RETURNED.defaultDescription());
 		
 		List<OrderTrack> orderTracks = order.getOrderTracks();
 		orderTracks.add(newTrack);

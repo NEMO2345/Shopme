@@ -58,7 +58,7 @@ public class WebSecurityConfig {
                 	.hasAnyAuthority("Admin","Editor","Salesperson","Shipper")
             	
                 .requestMatchers("/products/**").hasAnyAuthority("Admin","Editor")
-                .requestMatchers("/customers/**","/orders/**","/settings/**")
+                .requestMatchers("/customers/**","/orders/**","/settings/**","/get_shipping_cost")
                 	.hasAnyAuthority("Admin","Salesperson")
             	.anyRequest().authenticated()
             )

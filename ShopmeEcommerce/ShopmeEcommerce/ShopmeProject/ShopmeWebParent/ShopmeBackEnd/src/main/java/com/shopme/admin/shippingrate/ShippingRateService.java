@@ -6,20 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shopme.admin.paging.PagingAndSortingHelper;
+import com.shopme.admin.product.ProductRepository;
 import com.shopme.admin.setting.country.CountryRepository;
 import com.shopme.common.entity.Country;
 import com.shopme.common.entity.ShippingRate;
+import com.shopme.common.entity.product.Product;
 
 @Service
 public class ShippingRateService {
 
 	public static final int RATES_PER_PAGE = 10;
+	private static final int DIM_DIVISER =139;
 	
-	@Autowired
-	private ShippingRateRepository shippingRepo;
-	
-	@Autowired
-	private CountryRepository countryRepo;
+	@Autowired private ShippingRateRepository shippingRepo;
+	@Autowired private ProductRepository productRepo;
+	@Autowired private CountryRepository countryRepo;
 	
 	public void listByPage(int pageNum, PagingAndSortingHelper helper) {
 		helper.listEntities(pageNum, RATES_PER_PAGE, shippingRepo);
@@ -63,5 +64,19 @@ public class ShippingRateService {
 			throw new ShippingRateNotFoundException("Could not delete shipping rate with ID " + id);
 		}
 		shippingRepo.deleteById(id);
+	}
+	
+	public float caculateShippingCost(Integer productId,Integer countryId,String state) throws ShippingRateNotFoundException {
+		ShippingRate shippingRate =	shippingRepo.findByCountryAndState(countryId, state);
+		
+		if(shippingRate == null) {
+			throw new ShippingRateNotFoundException("No shipping rate found for the given "
+						+ " deatination. You have to enter shipping cost manually.");
+		}
+		Product product = productRepo.findById(countryId).get();
+		float dimWeight = (product.getLength() * product.getWidth() * product.getHeight()) / DIM_DIVISER;
+		float finalWeight = product.getWeight() > dimWeight ? product.getWeight() : dimWeight;	
+		
+		return finalWeight * shippingRate.getRate() ;
 	}
 }

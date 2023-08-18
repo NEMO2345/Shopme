@@ -54,6 +54,16 @@ public class ProductService {
 		 helper.updateModelAttributes(pageNum, page);
 	}
 	
+	public void searchProduct(int pageNum,PagingAndSortingHelper helper) {
+		
+		Pageable pageable = helper.createPageable(PRODUCTS_PER_PAGE,pageNum);
+		String keyword = helper.getKeyword();
+		
+		Page<Product> page = repo.searchProductByName(keyword, pageable);
+		
+		helper.updateModelAttributes(pageNum, page);
+	}
+	
 	public Product save(Product product) {
 		if(product.getId() == null) {
 			product.setCreatedTime(new Date());
@@ -78,7 +88,6 @@ public class ProductService {
 	}
 	
 	public String checkUnique(Integer id, String name) {
-		// TODO Auto-generated method stub
 				boolean isGreatingNew = (id == null || id ==0);
 				Product productByName = repo.findByName(name);
 				

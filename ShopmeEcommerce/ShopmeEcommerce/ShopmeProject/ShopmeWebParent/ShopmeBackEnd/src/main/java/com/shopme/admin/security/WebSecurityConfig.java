@@ -6,10 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -58,7 +56,7 @@ public class WebSecurityConfig {
                 	.hasAnyAuthority("Admin","Editor","Salesperson","Shipper")
             	
                 .requestMatchers("/products/**").hasAnyAuthority("Admin","Editor")
-                .requestMatchers("/customers/**","/orders/**","/settings/**","/get_shipping_cost")
+                .requestMatchers("/customers/**","/orders/**","/settings/**","/get_shipping_cost","/orders/search_product/**")
                 	.hasAnyAuthority("Admin","Salesperson")
             	.anyRequest().authenticated()
             )
@@ -74,8 +72,13 @@ public class WebSecurityConfig {
             .rememberMe(remember-> remember
             		.key("Adjhbsdbs_2312342y378")
             		.tokenValiditySeconds(7*24*60*60)
-            )
-            ;
+            );
+        http
+       	.headers(head -> head
+       		.frameOptions(iframe -> iframe
+       				.sameOrigin())	
+       		)
+        ;
       
 
         return http.build();

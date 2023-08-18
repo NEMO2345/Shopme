@@ -66,14 +66,15 @@ public class ShippingRateService {
 		shippingRepo.deleteById(id);
 	}
 	
-	public float caculateShippingCost(Integer productId,Integer countryId,String state) throws ShippingRateNotFoundException {
+	public float caculateShippingCost(Integer productId,Integer countryId,String state) 
+			throws ShippingRateNotFoundException {
 		ShippingRate shippingRate =	shippingRepo.findByCountryAndState(countryId, state);
 		
 		if(shippingRate == null) {
 			throw new ShippingRateNotFoundException("No shipping rate found for the given "
-						+ " deatination. You have to enter shipping cost manually.");
+						+ " destination. You have to enter shipping cost manually.");
 		}
-		Product product = productRepo.findById(countryId).get();
+		Product product = productRepo.findById(productId).get();
 		float dimWeight = (product.getLength() * product.getWidth() * product.getHeight()) / DIM_DIVISER;
 		float finalWeight = product.getWeight() > dimWeight ? product.getWeight() : dimWeight;	
 		

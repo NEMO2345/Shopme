@@ -10,7 +10,8 @@ public class ShippingRateRestController {
 	@Autowired private ShippingRateService service;
 	
 	@PostMapping("/get_shipping_cost")
-	public String getShippingCost(Integer productId,Integer countryId,String state) throws ShippingRateNotFoundException{
+	public String getShippingCost(Integer productId,Integer countryId,String state)
+			throws ShippingRateNotFoundException{
 		
 		float shippingCost = service.caculateShippingCost(productId, countryId, state);
 		return String.valueOf(shippingCost);

@@ -141,14 +141,14 @@
 	}
 	
 	function handleLinkViewCustomerDetails(){
-		$(".linkOrderDetail").on("click",function(e){
+		$(".linkCustomerDetail").on("click",function(e){
 			e.preventDefault();
 			linkDetailURL = $(this).attr("href");
 			$("#customerDetailModal").modal("show").find(".modal-content").load(linkDetailURL);
 		});
 	}
 	function handleLinkViewOrderDetails(){
-		$(".linkCustomerDetail").on("click",function(e){
+		$(".linkOrderDetail").on("click",function(e){
 			e.preventDefault();
 			linkDetailURL = $(this).attr("href");
 			$("#orderDetailModal").modal("show").find(".modal-content").load(linkDetailURL);

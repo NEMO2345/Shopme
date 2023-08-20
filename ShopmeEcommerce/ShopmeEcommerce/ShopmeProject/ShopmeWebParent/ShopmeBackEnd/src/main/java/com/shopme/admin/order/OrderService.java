@@ -1,5 +1,6 @@
 package com.shopme.admin.order;
 
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -14,13 +15,15 @@ import com.shopme.admin.paging.PagingAndSortingHelper;
 import com.shopme.admin.setting.country.CountryRepository;
 import com.shopme.common.entity.Country;
 import com.shopme.common.entity.order.Order;
+import com.shopme.common.entity.order.OrderStatus;
+import com.shopme.common.entity.order.OrderTrack;
 
 @Service
 public class OrderService {
 	
 	private static final int ORDERS_PER_PAGE = 10;
 	
-	@Autowired private OrderRepository repo;
+	@Autowired private OrderRepository oderRepo;
 	@Autowired private CountryRepository countryRepo;
 	
 	public void listByPage(int pageNum,PagingAndSortingHelper helper) {
@@ -43,9 +46,9 @@ public class OrderService {
 		Page<Order> page = null;
 		
 		if(keyword != null) {
-			page = repo.findAll(keyword,pageable);
+			page = oderRepo.findAll(keyword,pageable);
 		}else {
-			page = repo.findAll(pageable);
+			page = oderRepo.findAll(pageable);
 		}
 		
 		helper.updateModelAttributes(pageNum, page);
@@ -54,19 +57,19 @@ public class OrderService {
 	public Order get(Integer id) throws OrderNotFoundException{
 
 		try{
-			return repo.findById(id).get();
+			return oderRepo.findById(id).get();
 		}catch(NoSuchElementException e) {
 			throw new OrderNotFoundException("Could not find nay orders eith ID " + id);
 		}
 	}
 
 	public void delete(Integer id) throws OrderNotFoundException{
-		Long count = repo.countById(id);
+		Long count = oderRepo.countById(id);
 		if(count == null || count == 0) {
 			throw new OrderNotFoundException("Could not find any orders with ID "+ id);
 			
 		}
-		repo.deleteById(id);
+		oderRepo.deleteById(id);
 	}
 
 	public List<Country> listAllCountries() {
@@ -75,10 +78,31 @@ public class OrderService {
 
 	public void save(Order orderInForm) {
 		
-		Order orderInDB = repo.findById(orderInForm.getId()).get();
+		Order orderInDB = oderRepo.findById(orderInForm.getId()).get();
 		orderInForm.setOrderTime(orderInDB.getOrderTime());
 		orderInForm.setCustomer(orderInDB.getCustomer());
 		
-		repo.save(orderInForm);
+		oderRepo.save(orderInForm);
+	}
+	
+	public void updateStatus(Integer orderId,String status) {
+		Order orderInDB = oderRepo.findById(orderId).get();
+		OrderStatus statusToUpdate = OrderStatus.valueOf(status);
+		
+		if(!orderInDB.hasStatus(statusToUpdate)) {
+			List<OrderTrack> orderTracks =	orderInDB.getOrderTracks();
+			
+			OrderTrack track = new OrderTrack();
+			track.setOrder(orderInDB);
+			track.setStatus(statusToUpdate);
+			track.setUpdatedTime(new Date());
+			track.setNotes(statusToUpdate.defaultDescription());
+			
+			orderTracks.add(track);
+			orderInDB.setStatus(statusToUpdate);
+			
+			oderRepo.save(orderInDB);
+		}
+		
 	}
 }

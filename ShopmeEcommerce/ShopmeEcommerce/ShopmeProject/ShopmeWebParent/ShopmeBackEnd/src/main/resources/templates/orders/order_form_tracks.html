@@ -41,12 +41,13 @@
 										th:rowNumber="${status.count}"
 										th:disabled="${isTrackWithStatusNew}"
 										th:id="${isTrackWithStatusNew ? 'trackStatusOptions' : ''}">
-										
 									<th:block th:each="os : ${T(com.shopme.common.entity.order.OrderStatus).values()}">
-										<option th:value="${os}" th:text="${os}" th:selected="${os == track}"
-												th:defaultDescription="${os.defaultDescription}" />
+									    <option th:value="${os}" th:text="${os}"
+									        th:selected="${os.equals(track.status)}"
+									        th:defaultDescription="${os.defaultDescription}" />
+									</th:block>	
 								
-									</th:block> 
+
 								</select>
 							</div>
 						</div>

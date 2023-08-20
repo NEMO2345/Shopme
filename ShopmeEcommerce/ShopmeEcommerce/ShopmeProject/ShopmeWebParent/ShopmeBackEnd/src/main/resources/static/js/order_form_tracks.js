@@ -67,7 +67,7 @@ function generateTrackCode(){
 							<label class="col-form-label">Status: </label>
 							<div class="col">
 								<select name="trackStatus" class="form-control dropDownStatus" required="required" style="max-width: 150px"
-										th:rowNumber="${nextCount}>
+										rowNumber="${nextCount}>
 										`;
 	htmlCode += $("#trackStatusOptions").clone().html();
 	htmlCode += `

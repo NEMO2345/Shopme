@@ -10,7 +10,7 @@
 		<h2>Manage Orders | [[${pageTitle}]]</h2>
 	</div>
 	
-	<form th:action="@{/order/save}" method="post" th:object="${order}">
+	<form th:action="@{/order/save}" method="post" th:object="${order}" onsubmit="return processFormBeforeSubmit();">
 	
 		  <input type="hidden" th:field="*{id}"/>
 		<div>

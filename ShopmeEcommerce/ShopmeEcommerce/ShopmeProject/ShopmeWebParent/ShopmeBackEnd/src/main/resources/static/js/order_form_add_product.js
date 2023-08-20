@@ -77,6 +77,7 @@ function generateProductCode(productId,productName, mainImagePath, productCost, 
 	
 	htmlCode = `
 			<div class="border rounded p-1" id="${rowId}">
+			<input type="hidden" name="detailId" value="0"/>
 				<input type="hidden" name="productId" value="${productId}" class="hiddenProductId" /> 
 				<div class="row">
 					<div class="col-1">
@@ -96,6 +97,7 @@ function generateProductCode(productId,productName, mainImagePath, productCost, 
 						<td>Product Cost:</td>
 						<td>
 							<input type="text" class="form-control m-1 cost-input" required="required"
+									name="productDetailCost"
 									rowNumber="${nextCount}"
 									value="${productCost}" style="max-width: 140px"/>
 						</td>
@@ -104,6 +106,7 @@ function generateProductCode(productId,productName, mainImagePath, productCost, 
 						<td>Quantity:</td>
 						<td>
 							<input type="number" step="1" min="1" max="5" class="form-control m-1 quantity-input"
+									name="quantity"
 									rowNumber="${nextCount}"
 									id="${quantityId}"
 									value="1" style="max-width: 140px"/>
@@ -113,6 +116,7 @@ function generateProductCode(productId,productName, mainImagePath, productCost, 
 						<td>Unit Price:</td>
 						<td>
 							<input type="text" class="form-control m-1 price-input" required="required"
+									name="productPrice"
 									id="${priceId}" 
 									rowNumber="${nextCount}"
 									value="${productPrice}" style="max-width: 140px"/>
@@ -122,6 +126,7 @@ function generateProductCode(productId,productName, mainImagePath, productCost, 
 						<td>Sub Total:</td>
 						<td>
 							<input type="text" readonly="readonly" class="form-control m-1 subtotal-output" required="required"
+									name="productSubtotal"
 									id="${subtotalId}"
 									value="${productPrice}" style="max-width: 140px"/>
 						</td>
@@ -130,6 +135,7 @@ function generateProductCode(productId,productName, mainImagePath, productCost, 
 						<td>Shipping Cost:</td>
 						<td>
 							<input type="text" class="form-control m-1 ship-input" required="required"
+									name="productShipCost"
 									value="${shippingCost}" style="max-width: 140px"/>
 						</td>
 					</tr>

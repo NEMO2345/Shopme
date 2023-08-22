@@ -74,13 +74,13 @@ public class OrderService {
 		return repo.save(newOrder);
 	}
 	
-	public Page<Order> listForCustomerByPage(Customer customer,int pageNum,
-			String sortField,String sortDir,String keyword){
+	public Page<Order> listForCustomerByPage(Customer customer, int pageNum,
+			String sortField, String sortDir, String keyword){
 		
 		Sort sort = Sort.by(sortField);
 		sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
 		
-		Pageable pageable = PageRequest.of(pageNum - 1, ORDERS_PER_PAGE,sort);
+		Pageable pageable = PageRequest.of(pageNum - 1, ORDERS_PER_PAGE, sort);
 	
 		if(keyword != null) {
 			return repo.findAll(keyword, customer.getId(), pageable);

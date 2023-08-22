@@ -27,6 +27,7 @@ public class OrderController {
 		return listOrdersByPage(model,request,1,"orderTime","desc",null);
 	}
 
+	@GetMapping("/orders/page/{pageNum}")
 	private String listOrdersByPage(Model model, HttpServletRequest request,
 			@PathVariable(name="pageNum") int pageNum, String sortField, String sortDir,
 			String  orderKeyword) {

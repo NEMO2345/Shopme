@@ -59,6 +59,18 @@ public class OrderController {
 		return "orders/order_customer";
 	}
 
+	@GetMapping("/orders/detail/{id}")
+	public String viewOrderDetail(Model model,@PathVariable(name = "id")Integer id,
+			HttpServletRequest request) {
+		
+		Customer customer = getAuthenticatedCustomer(request);
+		
+		Order order = orderService.getOrder(id, customer);
+		model.addAttribute("order", order);
+		
+		return "orders/order_details_modal";
+	}
+
 	private Customer getAuthenticatedCustomer(HttpServletRequest request) {
 		String email = Utility.getEmailOfAuthenticatedCustomer(request);
 		return customerService.getCustomerByEmail(email);

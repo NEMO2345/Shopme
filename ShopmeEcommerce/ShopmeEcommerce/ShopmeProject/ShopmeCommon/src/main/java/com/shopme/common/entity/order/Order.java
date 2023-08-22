@@ -303,6 +303,10 @@ public class Order extends AbstractAddress{
 	public boolean isCOD() {
 		return paymentMethod.equals(PaymentMethod.COD);
 	}
+	@Transient
+	public boolean isProcessing() {
+		return hasStatus(OrderStatus.PROCESSING);
+	}
 	
 	@Transient
 	public boolean isPicked() {

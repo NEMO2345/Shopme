@@ -26,7 +26,7 @@ import com.shopme.common.exception.OrderNotFoundException;
 @Service
 public class OrderService {
 	
-	public static final int ORDERS_PER_PAGE = 3;
+	public static final int ORDERS_PER_PAGE = 5;
 	
 	@Autowired private OrderRepository repo;
 
@@ -72,6 +72,7 @@ public class OrderService {
 			
 			orderDetails.add(orderDetail);
 		}
+		
 		OrderTrack track = new OrderTrack();
 		track.setOrder(newOrder);
 		track.setStatus(OrderStatus.NEW);

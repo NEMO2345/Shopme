@@ -16,7 +16,15 @@ public class ReportRestController {
 	public List<ReportIterm> getReportDataByDatePeriod(@PathVariable("period") String period){
 		
 		System.out.println("Report period : " + period);
-		return masterOrderReportService.getReportDataLast7Days();
+		switch (period) {
+		case "last_7_days": 
+			return masterOrderReportService.getReportDataLast7Days();
+		case "last_28_days": 
+			return masterOrderReportService.getReportDataLast28Days();
+		default:
+			return masterOrderReportService.getReportDataLast7Days();
+		}
+		
 	}
 	
 }

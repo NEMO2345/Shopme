@@ -20,9 +20,10 @@ public class MasterOrderReportService {
 	private DateFormat dateFormatter;
 	
 	public List<ReportIterm> getReportDataLast7Days(){
-		
-		System.out.println("getReportDataLast7Days...");
 		return getReportDataLastXDays(7);
+	}
+	public List<ReportIterm> getReportDataLast28Days(){
+		return getReportDataLastXDays(28);
 	}
 	
 	private List<ReportIterm> getReportDataLastXDays(int days){

@@ -36,8 +36,26 @@ public class OrderDetailRepositoryTests {
 		assertThat(listOrderDetails.size()).isGreaterThan(0);
 		
 		for(OrderDetail orderDetail : listOrderDetails) {
-			System.out.printf("%30s | %d | %.2f | %.2f | %.2f \n",
+			System.out.printf("%30s | %d | %10.2f | %10.2f | %10.2f \n",
 					orderDetail.getProduct().getCategory().getName(),orderDetail.getQuantity(),orderDetail.getProductCost(),
+					orderDetail.getShippingCost(),orderDetail.getSubtotal());
+		
+		}
+	}
+	
+	@Test
+	public void testFindWithProductAndTimeBetween() throws ParseException {
+		
+		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date startTime = dateFormatter.parse("2023-08-16");
+		Date endTime = dateFormatter.parse("2023-08-23");
+		
+		List<OrderDetail> listOrderDetails =  repo.findWithProductAndTimeBetween(startTime, endTime);
+		assertThat(listOrderDetails.size()).isGreaterThan(0);
+		
+		for(OrderDetail orderDetail : listOrderDetails) {
+			System.out.printf("%30s | %d | %10.2f | %10.2f | %10.2f \n",
+					orderDetail.getProduct().getName(),orderDetail.getQuantity(),orderDetail.getProductCost(),
 					orderDetail.getShippingCost(),orderDetail.getSubtotal());
 		
 		}

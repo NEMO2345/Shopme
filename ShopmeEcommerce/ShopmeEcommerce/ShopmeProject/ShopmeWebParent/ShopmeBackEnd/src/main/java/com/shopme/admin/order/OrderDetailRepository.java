@@ -14,4 +14,10 @@ public interface OrderDetailRepository  extends CrudRepository<OrderDetail, Inte
 			+ " d.productCost, d.shippingCost, d.subtotal)"
 			+ " from OrderDetail d where d.order.orderTime between ?1 and ?2")
 	public List<OrderDetail> findWithCategoryAndTimeBetween(Date startTime,Date endTime);
+	
+	@Query("select new com.shopme.common.entity.order.OrderDetail(d.quantity, d.product.name,"
+			+ " d.productCost, d.shippingCost, d.subtotal)"
+			+ " from OrderDetail d where d.order.orderTime between ?1 and ?2")
+	public List<OrderDetail> findWithProductAndTimeBetween(Date startTime,Date endTime);
+	
 }

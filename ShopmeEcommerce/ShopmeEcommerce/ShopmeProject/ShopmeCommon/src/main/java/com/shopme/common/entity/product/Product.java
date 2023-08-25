@@ -77,13 +77,15 @@ public class Product extends IdBaseEntity{
 	private Set<ProductDetail> details = new HashSet<>();
 
 	
-	
-	
 	public Product() {
 	}
 
-	
-	
+	public Product(String name) {
+		this.name = name;
+	}
+
+
+
 	public Product(Integer id) {
 		this.id = id;
 	}

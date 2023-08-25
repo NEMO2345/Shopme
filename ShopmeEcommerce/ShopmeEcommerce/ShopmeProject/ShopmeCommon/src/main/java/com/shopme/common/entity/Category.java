@@ -42,10 +42,10 @@ public class Category extends IdBaseEntity{
 	}
 
 	public Category(Integer id) {
-		super();
 		this.id = id;
 	}
 	
+
 	public static Category copyIdAndName(Category category) {
 		Category copyCategory = new Category();
 		copyCategory.setId(category.getId());

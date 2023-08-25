@@ -1,5 +1,6 @@
 package com.shopme.common.entity.order;
 
+import com.shopme.common.entity.Category;
 import com.shopme.common.entity.IdBaseEntity;
 import com.shopme.common.entity.product.Product;
 
@@ -25,6 +26,18 @@ public class OrderDetail extends IdBaseEntity{
 	@ManyToOne
 	@JoinColumn(name = "order_id")
 	private Order order;
+	
+	public OrderDetail(String categoryName, int quantity, float productCost, float shippingCost, float subtotal) {
+		this.product = new Product();
+		this.product.setCategory(new Category(categoryName));
+		this.quantity = quantity;
+		this.productCost = productCost;
+		this.shippingCost = shippingCost;
+		this.subtotal = subtotal;
+	}
+
+	public OrderDetail() {	
+	}
 
 	public int getQuantity() {
 		return quantity;

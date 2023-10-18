@@ -49,7 +49,7 @@
 						<div id="paypal-button-container"></div>
 						<form th:action="@{/process_paypal_order}" method="post" id="paypalForm">
 							<input type="hidden" name="orderId" id="orderId"/>
-							<input type="hidden" name="paymentMethod" id="PAYPAL"/>
+							<input type="hidden" name="paymentMethod" id="PAYPAL" value="PAYPAL"/>
 						</form>
 					</div>
 				</div>
@@ -128,61 +128,70 @@
 	}
 		
 	paypal.Buttons({
-		enableStandardCardFields : true,
-		createOrder: function(data,actions){
-			//setup a transaction
+		enableStandardCardFields: true,
+		createOrder: function(data, actions) {
+			// setup a transaction
 			return actions.order.create({
-				intent: 'CAPTURE', //make payment immediately
-				payer:{
+
+				intent: 'CAPTURE', // make payment immediately
+				payer: {
 					name: {
-						given_name: "[[${customer.firstName}]]",
-						surname: "[[${customer.lastName}]]"
+					given_name: "[[${customer.firstName}]]",
+					surname: "[[${customer.lastName}]]"
 					},
-					address:{
+
+					address: {
 						address_line_1: "[[${customer.addressLine1}]]",
 						address_line_2: "[[${customer.addressLine2}]]",
 						admin_area_1: "[[${customer.state}]]",
 						admin_area_2: "[[${customer.city}]]",
 						postal_code: "[[${customer.postalCode}]]",
 						country_code: "[[${customer.country.code}]]"
-	
 					},
+
 					email_address: "[[${customer.email}]]",
-					
+
 					phone: {
 						phone_type: "MOBILE",
-						phone_numberr: {
+						phone_number: {
 							national_number: "[[${customer.phoneNumber}]]"
 						}
 					}
 				},
+
 				purchase_units: [{
 					amount: {
-						value: "[[${checkoutInfo.PaymentTotal4Paypal}]]",
+						value: "[[${checkoutInfo.paymentTotal}]]",
 						currency_code: "[[${currencyCode}]]"
 					}
 				}],
-				application_contextt:{
+
+				application_context: {
 					shipping_preference: "NO_SHIPPING"
 				}
 			});
 		},
-		onApprove: function(data, actions){
-			//buyer approved payment
-			return actions.order.capture().then(function(details){
+
+		onApprove: function(data, actions) {
+			// buyer approved payment
+			return actions.order.capture().then(function(details) {
+				// console.log(details);
 				orderId = details.id;
-				validateOrder(orderId);
+				// totalAmount = details.purchase_units[0].amount.value;
+
+				validateOrder(orderId);	
 			});
 		},
-		onCancel: function(data){
-			//buyer cancelled payment
-			alert('Payment cancalled by the buyer');
+
+		onCancel: function(data) {
+			// buyer cancelled payment
+			alert('Payment cancelled by the buyer');
 		},
-		onError: function(err){
-			//error that prevents buyer from doing checkout
-			alert('Something wrong happend');
+
+		onError: function(err) {
+			// error that prevents buyer from doing checkout
+			showErrorModal("Something wrong with your address information, so payment will not work.");
 		}
-		
 	}).render("#paypal-button-container");
 	
 </script>

@@ -12,9 +12,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.shopme.category.CategoryService;
 import com.shopme.common.entity.Category;
+import com.shopme.common.entity.Customer;
+import com.shopme.common.entity.Review;
 import com.shopme.common.entity.product.Product;
 import com.shopme.common.exception.CategoryNotFoundException;
 import com.shopme.common.exception.ProductNotFoundException;
+import com.shopme.review.AuthenticationControllerHelperUtil;
+import com.shopme.review.ReviewService;
+import com.shopme.review.vote.ReviewVoteService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 
 @Controller
@@ -24,6 +31,15 @@ public class ProductController {
 	private ProductService productService;
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private ReviewVoteService reviewVoteService;
+	
+	@Autowired
+	private ReviewService reviewService;
+	
+	@Autowired
+	private AuthenticationControllerHelperUtil authenticationControllerHelperUtil;
 	
 	@GetMapping("/c/{category_alias}")
 	public String viewCategoryFirstPage(@PathVariable("category_alias") String alias,
@@ -69,13 +85,37 @@ public class ProductController {
 	}
 	
 	@GetMapping("/p/{product_alias}")
-		public String viewProductDetail(@PathVariable("product_alias") String alias,Model model) {
+		public String viewProductDetail(@PathVariable("product_alias") String alias,Model model, HttpServletRequest request) {
 			try {
 				Product product = productService.getProduct(alias);
 				List<Category> listcategoryParents = categoryService.getCategoryParents(product.getCategory());
-
+				Page<Review> listReviews = reviewService.list3MostVotedReviewsByProduct(product);
+				
+				Customer customer = authenticationControllerHelperUtil.getAuthenticatedCustomer(request);
+				
+				if (customer != null) {
+					boolean customerReviewed = reviewService.didCustomerReviewProduct(customer, product.getId());
+				
+					
+					reviewVoteService.markReviewsVotedForProductByCustomer(listReviews.getContent(), 
+							                                         product.getId(), 
+							                                         customer.getId());
+					
+					//questionVoteService.markQuestionsVotedForProductByCustomer(listQuestions, product.getId(), customer.getId());
+					
+					if (customerReviewed) {
+						model.addAttribute("customerReviewed", customerReviewed);
+						//LOGGER.info("ProductController | viewProductDetail | customerReviewed : " + customerReviewed);
+					} else {
+						boolean customerCanReview = reviewService.canCustomerReviewProduct(customer, product.getId());
+						//LOGGER.info("ProductController | viewProductDetail | customerCanReview : " + customerCanReview);
+						model.addAttribute("customerCanReview", customerCanReview);
+					}
+				}
+				
 				model.addAttribute("listcategoryParents",listcategoryParents);
 				model.addAttribute("product",product);
+				model.addAttribute("listReviews", listReviews);
 				model.addAttribute("pageTitle",product.getShortName());
 
 				return "product/product_detail";

@@ -20,7 +20,7 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer> {
 	@Modifying
 	public void enable(Integer id);
 	
-	@Query("update Customer c set c.authenticationType =?1 where c.id=?1")
+	@Query("update Customer c set c.authenticationType =?2 where c.id=?1")
 	@Modifying
 	public void updateAuthenticationType(Integer customerId,AuthenticationType type);
 

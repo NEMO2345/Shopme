@@ -111,11 +111,16 @@ public class ProductController {
 		ProductSeverHelper.saveUploadedImages(mainImageMultipart,extraImageMultiparts,savedProduct);
 		
 		ProductSeverHelper.deleteExtraImagesWeredRemovedOnForm(product);
-	
+		
+		
+		
+		
 		ra.addFlashAttribute("message","The product has been saved successfully");
 		
 		return "redirect:/products";
 	}
+	
+	
 	
 	
 	@GetMapping("/products/{id}/enabled/{status}")

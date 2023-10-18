@@ -37,7 +37,7 @@ public class SettingService {
 	
 	public PaymentSettingBag getPaymentSettings() {
 		
-		List<Setting> settings = settingRepo.findByCategory(SettingCategory.CURRENCY);
+		List<Setting> settings = settingRepo.findByCategory(SettingCategory.PAYMENT);
 		return new PaymentSettingBag(settings);
 	}
 	

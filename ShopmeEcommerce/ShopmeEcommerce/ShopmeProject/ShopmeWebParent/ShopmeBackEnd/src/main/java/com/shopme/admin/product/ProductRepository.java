@@ -39,4 +39,30 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	@Query("select p from Product p where p.name like %?1%")
 	public Page<Product> searchProductByName(String keyword,Pageable pageable);
+	
+	@Query(value = "UPDATE `shopmedb`.`products` \r\n"
+			+ "SET \r\n"
+			+ "`average_rating` = COALESCE((SELECT AVG(r.rating) FROM shopmedb.reviews r WHERE r.product_id = ?1),0), \r\n"
+			+ "`review_count` = (SELECT COUNT(r.id) FROM shopmedb.reviews r WHERE r.product_id = ?1)\r\n"
+			+ " WHERE (`id` = ?1);", nativeQuery = true)
+	@Modifying
+	public void updateReviewCountAndAverageRating(Integer productId);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -117,7 +117,7 @@ public class CheckoutController {
 		
 		Order createOrder =	orderService.createOrder(customer, defaultAddress, cartItems, paymentMethod, checkoutInfo);
 		cartService.deleteByCustomer(customer);
-		//sendOrderConfirmationEmail(request,createOrder);
+		sendOrderConfirmationEmail(request,createOrder);
 		
 		return "/checkout/order_completed";
 	}
@@ -130,7 +130,7 @@ public class CheckoutController {
 		
 		String toAddress = order.getCustomer().getEmail();
 		String subject = emailSettings.getOrderConfirmationSubject();
-		String content = emailSettings.getCustomerVerifyContent(); 
+		String content = emailSettings.getOrderConfirmationContent(); 
 		
 		subject = subject.replace("[[orderId]]", String.valueOf(order.getId()));
 		

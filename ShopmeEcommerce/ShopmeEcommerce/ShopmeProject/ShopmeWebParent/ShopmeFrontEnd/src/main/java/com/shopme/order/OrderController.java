@@ -13,6 +13,8 @@ import com.shopme.Utility;
 import com.shopme.common.entity.Customer;
 import com.shopme.common.entity.order.Order;
 import com.shopme.customer.CustomerService;
+import com.shopme.review.ReviewService;
+import com.shopme.review.ReviewStatusUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -21,6 +23,8 @@ public class OrderController {
 	
 	@Autowired private OrderService orderService;
 	@Autowired private CustomerService customerService;
+	
+	@Autowired private ReviewService reviewService;
 	
 	@GetMapping("/orders")
 	public String listFirstPage(Model model,HttpServletRequest request) {
@@ -66,6 +70,9 @@ public class OrderController {
 		Customer customer = getAuthenticatedCustomer(request);
 		
 		Order order = orderService.getOrder(id, customer);
+		
+		ReviewStatusUtil.setProductReviewableStatus(customer, order, reviewService);
+		
 		model.addAttribute("order", order);
 		
 		return "orders/order_details_modal";

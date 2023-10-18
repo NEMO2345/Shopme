@@ -6,7 +6,7 @@ server:
 spring:
   datasource:
     password: phamthily
-    url: jdbc:mysql://localhost:3306/shopmedb
+    url: jdbc:mysql://localhost:3306/shopme
     username: root
   jpa:
     hibernate:

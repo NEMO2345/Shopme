@@ -92,14 +92,9 @@
 <script th:src="@{/js/common_list.js}"></script>
 <script type="text/javascript">
 	moduleURL = "[[@{/categories}]]";
+	entityName = "category";
 	
-	$(document).ready(function(){
-		$(".link-delete").on("click", function(e){
-			e.preventDefault();
-			showDeleteConfirModal($(this),'category');
-			
-		})
-	});
+	
 	
 
 </script>

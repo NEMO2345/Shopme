@@ -74,8 +74,10 @@ public class ProductService {
 		}else {
 			product.setAlias(product.getAlias().replaceAll(" ", "-"));
 		}
-		product.setUpdatedTime(new Date());
-		return repo.save(product);
+		Product updatedProduct = repo.save(product);
+		repo.updateReviewCountAndAverageRating(updatedProduct.getId());
+
+		return updatedProduct;
 	}
 
 	public void saveProductPrice(Product productInForm) {
@@ -88,18 +90,20 @@ public class ProductService {
 	}
 	
 	public String checkUnique(Integer id, String name) {
-				boolean isGreatingNew = (id == null || id ==0);
-				Product productByName = repo.findByName(name);
-				
-				if(isGreatingNew) {
-					if(productByName != null) return "Duplicate";
-				}else {
-						if(productByName != null && productByName.getId() != id) {
-							return "Duplicate";
-						}
-					}
-					return "OK";
+		boolean isCreatingNew = (id == null || id == 0);
+		Product productByName = repo.findByName(name);
+
+		if (isCreatingNew) {
+			System.out.print("Vi tri 1");
+			if (productByName != null) return "Duplicate";
+		} else {
+			if (productByName != null && (productByName.getId() - id) !=0) {
+				return "Duplicate";
 			}
+		}
+
+		return "OK";
+	}
 	
 	public void updateProductEnabledStatus(Integer id, boolean enabled) {
 		repo.updateEnabledStatus(id, enabled);

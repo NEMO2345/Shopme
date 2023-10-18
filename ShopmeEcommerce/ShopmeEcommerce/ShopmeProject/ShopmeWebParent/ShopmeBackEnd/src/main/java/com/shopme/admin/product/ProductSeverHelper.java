@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.SecureRandom;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +18,10 @@ import com.shopme.common.entity.product.Product;
 import com.shopme.common.entity.product.ProductImage;
 
 public class ProductSeverHelper {
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductSeverHelper.class);
+	
+	
 
 	static void deleteExtraImagesWeredRemovedOnForm(Product product) {
 		String extraImageDir = "../product-images/" + product.getId() + "/extras";
@@ -64,7 +68,7 @@ public class ProductSeverHelper {
 		}
 		for(int count = 0 ; count < detailNames.length ; count ++) {
 			String name = detailNames[count];
-			String value = detailNames[count];
+			String value = detailValues[count];
 			Integer id = Integer.parseInt(detailIDs[count]);
 			
 			if(id !=0 ) {

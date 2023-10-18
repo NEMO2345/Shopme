@@ -75,8 +75,49 @@ public class Product extends IdBaseEntity{
 	
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<ProductDetail> details = new HashSet<>();
+	
+	private int reviewCount;
+	private float averageRating;
+	
+	@Transient 
+	private boolean customerCanReview;
+	
+	@Transient 
+	private boolean reviewedByCustomer;
 
 	
+	public boolean isCustomerCanReview() {
+		return customerCanReview;
+	}
+
+	public void setCustomerCanReview(boolean customerCanReview) {
+		this.customerCanReview = customerCanReview;
+	}
+
+	public boolean isReviewedByCustomer() {
+		return reviewedByCustomer;
+	}
+
+	public void setReviewedByCustomer(boolean reviewedByCustomer) {
+		this.reviewedByCustomer = reviewedByCustomer;
+	}
+
+	public int getReviewCount() {
+		return reviewCount;
+	}
+
+	public void setReviewCount(int reviewCount) {
+		this.reviewCount = reviewCount;
+	}
+
+	public float getAverageRating() {
+		return averageRating;
+	}
+
+	public void setAverageRating(float averageRating) {
+		this.averageRating = averageRating;
+	}
+
 	public Product() {
 	}
 
@@ -326,4 +367,29 @@ public class Product extends IdBaseEntity{
 		}
 		return this.price;
 	}
+	
+	@Transient
+	public String getURI() {
+		return "/p/" + this.alias;
+	}
+	
+	public void copyStateFrom(Product otherProduct) {
+ //       this.name = otherProduct.getName();
+        this.alias = otherProduct.getAlias();
+        this.shortDescription = otherProduct.getShortDescription();
+        this.fullDescription = otherProduct.getFullDescription();
+//        this.createdTime = otherProduct.getCreatedTime();
+//        this.updatedTime = otherProduct.getUpdatedTime();
+        this.enabled = otherProduct.isEnabled();
+        this.inStock = otherProduct.isInStock();
+        this.cost = otherProduct.getCost();
+        this.price = otherProduct.getPrice();
+        this.discountPercent = otherProduct.getDiscountPercent();
+        this.length = otherProduct.getLength();
+        this.width = otherProduct.getWidth();
+        this.height = otherProduct.getHeight();
+        this.weight = otherProduct.getWeight();
+        this.mainImage = otherProduct.getMainImage();
+    }
+
 }

@@ -153,12 +153,10 @@
 <script type="text/javascript">
 	moduleURL = "[[@{/products}]]";
 	
+	entityName = "product";
+	
 	$(document).ready(function(){
-		$(".link-delete").on("click", function(e){
-			e.preventDefault();
-			showDeleteConfirModal($(this),'product');
-			
-		});
+		
 		$(".link-detail").on("click", function(e){
 			e.preventDefault();
 			linkDetailURL = $(this).attr("href");

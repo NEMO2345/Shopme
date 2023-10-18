@@ -1,116 +1,48 @@
 package com.shopme.admin.report;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.shopme.admin.order.OrderRepository;
 import com.shopme.common.entity.order.Order;
 
+
+
 @Service
-public class MasterOrderReportService {
+public class MasterOrderReportService extends AbstractReportService{
 
-	@Autowired private OrderRepository repo;
-	private DateFormat dateFormatter;
+	private static final Logger LOGGER = LoggerFactory.getLogger(MasterOrderReportService.class);
 	
-	public List<ReportIterm> getReportDataLast7Days(){
-		return getReportDataLastXDays(7);
-	}
-	public List<ReportIterm> getReportDataLast28Days(){
-		return getReportDataLastXDays(28);
-	}
+	private final OrderRepository repo;
 	
-	private List<ReportIterm> getReportDataLastXDays(int days){
-		Date endTime = new Date();
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DAY_OF_MONTH, -(days -1));
-		Date startTime =	cal.getTime();
-		
-		System.out.println("Start time: " + startTime);
-		System.out.println("Start time: " + endTime);
+	public MasterOrderReportService(OrderRepository repo) {
+		super();
+		this.repo = repo;
+	}
 
-		dateFormatter = new SimpleDateFormat("yyy-MM-dd");
-		return getReportDataByDateRange(startTime,endTime);
-	}
-	
-	private List<ReportIterm> getReportDataByDateRange(Date startTime,Date endTime){
+	@Override
+	protected List<ReportItemDTO> getReportDataByDateRangeInternal(Date startTime, Date endTime,
+			ReportType reportType) {
 		
-		List<Order> listOrders	= repo.findByOrderTimeBetween(startTime, endTime);
-		printRawDate(listOrders);
+		LOGGER.info("MasterOrderReportService | getReportDataByDateRange is called");
 		
-		List<ReportIterm> listReportIterms = createReportData(startTime,endTime);
+		List<Order> listOrders = repo.findByOrderTimeBetween(startTime, endTime);
+		MasterOrderReportServiceUtil.printRawData(listOrders);
+
+		List<ReportItemDTO> listReportItems = MasterOrderReportServiceUtil.createReportData(startTime, endTime, dateFormatter, reportType);
+
 		System.out.println();
+
+		MasterOrderReportServiceUtil.calculateSalesForReportData(listOrders, listReportItems, dateFormatter);
 		
-		calculateSalesForReportData(listOrders, listReportIterms);
+		MasterOrderReportServiceUtil.printReportData(listReportItems);
 		
-		printReportData(listReportIterms);
-		
-		return listReportIterms;
-		
+		return listReportItems;
 	}
 	
-	private void calculateSalesForReportData(List<Order> listOrders,List<ReportIterm> listReportIterms) {
-		for(Order order : listOrders) {
-			String orderDateString = dateFormatter.format(order.getOrderTime());
-			
-			ReportIterm reportIterm = new ReportIterm(orderDateString);
-			
-			int itemIndex =	listReportIterms.indexOf(reportIterm);
-			if(itemIndex >= 0) {
-				reportIterm = listReportIterms.get(itemIndex);
-				
-				reportIterm.addGrossSales(order.getTotal());
-				reportIterm.addNetSales(order.getSubtotal() - order.getProductCost());
-				reportIterm.increaseOrdersCount();
-			}
-		}
-	}
 
-	private void printReportData(List<ReportIterm> listReportIterms) {
-		listReportIterms.forEach(item -> {
-			System.out.printf("%s, %10.2f, %10.2f, %d \n",item.getIdentifier(),item.getGrossSales(),item.getNetSales(),item.getOrdersCount());
-		});
-		
-	}
-
-	private List<ReportIterm> createReportData(Date startTime, Date endTime) {
-		List<ReportIterm> listReportIterms = new ArrayList<>();
-		
-		Calendar startDate = Calendar.getInstance();
-		startDate.setTime(startTime);
-		Calendar endDate = Calendar.getInstance();
-		endDate.setTime(endTime);
-		
-		Date currentDate = startDate.getTime();
-		String dateString = dateFormatter.format(currentDate);
-		
-		listReportIterms.add(new ReportIterm(dateString));
-		
-		do {
-			startDate.add(Calendar.DAY_OF_MONTH, 1);
-			currentDate = startDate.getTime();
-			dateString = dateFormatter.format(currentDate);
-			
-			listReportIterms.add(new ReportIterm(dateString));
-			
-		} while (startDate.before(endDate));
-		
-		return listReportIterms;
-		
-	}
-
-	private void printRawDate(List<Order> listOrders) {
-		listOrders.forEach(order -> {
-			System.out.printf("%3d | %s | %10.2f | %10.2f \n",
-					order.getId(),order.getOrderTime(),order.getTotal(),order.getProductCost());
-		});
-		
-	}
-	
 }
